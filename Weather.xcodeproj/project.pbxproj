@@ -29,10 +29,13 @@
 		E0F85AD92C40BE300075E7A9 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AD82C40BE300075E7A9 /* NetworkProtocol.swift */; };
 		E0F85ADB2C40C0E60075E7A9 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85ADA2C40C0E60075E7A9 /* Identifier.swift */; };
 		E0F85ADD2C40C1940075E7A9 /* TableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */; };
-		E0F85AE22C40DD3E0075E7A9 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */; };
+		E0F85AE22C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE12C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift */; };
 		E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */; };
 		E0F85AE72C410E380075E7A9 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E0F85AE62C410E380075E7A9 /* Kingfisher */; };
 		E0F85AE92C41111E0075E7A9 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE82C41111E0075E7A9 /* UserDefaultsManager.swift */; };
+		E0F85AED2C4120C00075E7A9 /* RegularDaysWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AEC2C4120C00075E7A9 /* RegularDaysWeather.swift */; };
+		E0F85AF02C4124B70075E7A9 /* RegularDaysTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */; };
+		E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,9 +61,12 @@
 		E0F85AD82C40BE300075E7A9 /* NetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
 		E0F85ADA2C40C0E60075E7A9 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeader.swift; sourceTree = "<group>"; };
-		E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		E0F85AE12C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularHoursTableViewCell.swift; sourceTree = "<group>"; };
 		E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularHoursCell.swift; sourceTree = "<group>"; };
 		E0F85AE82C41111E0075E7A9 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		E0F85AEC2C4120C00075E7A9 /* RegularDaysWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysWeather.swift; sourceTree = "<group>"; };
+		E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysTableViewCell.swift; sourceTree = "<group>"; };
+		E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +153,7 @@
 			children = (
 				E0F85ABC2C401A5D0075E7A9 /* CurrentWeather.swift */,
 				E0F85AD22C4031740075E7A9 /* RegularWeather.swift */,
+				E0F85AEC2C4120C00075E7A9 /* RegularDaysWeather.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,10 +189,20 @@
 		E0F85AE02C40DD1F0075E7A9 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */,
+				E0F85AEE2C4124980075E7A9 /* MainTableViewCell */,
 				E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */,
+				E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		E0F85AEE2C4124980075E7A9 /* MainTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85AE12C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift */,
+				E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */,
+			);
+			path = MainTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,14 +297,17 @@
 				E0F85ACF2C40286A0075E7A9 /* MainViewModel.swift in Sources */,
 				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
 				E0F85AD32C4031740075E7A9 /* RegularWeather.swift in Sources */,
+				E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */,
 				E0F85AB42C4016820075E7A9 /* Resource.swift in Sources */,
 				E0F85ABD2C401A5D0075E7A9 /* CurrentWeather.swift in Sources */,
 				E0F85AD62C40BDC50075E7A9 /* NetworkService.swift in Sources */,
 				E0F85AAC2C4013EC0075E7A9 /* BaseViewController.swift in Sources */,
+				E0F85AF02C4124B70075E7A9 /* RegularDaysTableViewCell.swift in Sources */,
+				E0F85AED2C4120C00075E7A9 /* RegularDaysWeather.swift in Sources */,
 				E0F85A922C4011680075E7A9 /* AppDelegate.swift in Sources */,
 				E0F85AB02C4014FB0075E7A9 /* BaseTableViewCell.swift in Sources */,
 				E0F85ADB2C40C0E60075E7A9 /* Identifier.swift in Sources */,
-				E0F85AE22C40DD3E0075E7A9 /* MainTableViewCell.swift in Sources */,
+				E0F85AE22C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift in Sources */,
 				E0F85A942C4011680075E7A9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -69,8 +69,8 @@ final class TableViewHeader: UITableViewHeaderFooterView {
     func configureHeader(_ data: CurrentWeather?) {
         guard let data else { return }
         cityLabel.text = data.name
-        tempLabel.text = data.main.currentTempString
-        convertedTempLabel.text = data.main.convertedMinMaxTemp
+        tempLabel.text = data.temp.currentTempString
+        convertedTempLabel.text = data.temp.convertedMinMaxTemp
         guard let weather = data.weather.first else { return }
         descLabel.text = weather.description
     }

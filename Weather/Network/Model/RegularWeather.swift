@@ -15,12 +15,12 @@ struct RegularWeatherContainer: Decodable {
 }
 
 struct ListData: Decodable {
-    let main: Temperature
+    let temp: Temperature
     let weather: [Weather]
     let date: String
     
     enum CodingKeys: String, CodingKey {
-        case main
+        case temp = "main"
         case weather
         case date = "dt_txt"
     }

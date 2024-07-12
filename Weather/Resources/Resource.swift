@@ -18,6 +18,7 @@ enum Resource {
     enum FontCase {
         static let regular14 = UIFont.systemFont(ofSize: 14)
         static let regular15 = UIFont.systemFont(ofSize: 15)
+        static let regular18 = UIFont.systemFont(ofSize: 18)
         static let bold15 = UIFont.systemFont(ofSize: 15, weight: .bold)
         static let regular22 = UIFont.systemFont(ofSize: 22)
         static let regular24 = UIFont.systemFont(ofSize: 24)

@@ -49,7 +49,7 @@ final class RegularHoursCell: BaseCollectionViewCell {
     
     func configureCell(_ data: ListData) {
         hourLabel.text = data.formattedDate
-        tempLabel.text = data.main.regularHoursTempString
+        tempLabel.text = data.temp.regularHoursTempString
         guard let url = data.weather.first?.iconURL else { return }
         iconImageView.kf.setImage(with: url)
     }

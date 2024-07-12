@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MainTableViewCell: BaseTableViewCell {
+final class RegularHoursTableViewCell: BaseTableViewCell {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     

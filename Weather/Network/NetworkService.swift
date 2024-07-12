@@ -34,7 +34,11 @@ extension NetworkService: NetworkProtocol {
         fetchWeatherData(urlCase: .nowWeather(id: id), completionHandler)
     }
     
-    func fetchWeatherRegularly(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void) {
+    func fetchHoursWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void) {
+        fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
+    }
+    
+    func fetchDaysWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void) {
         fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
     }
 }

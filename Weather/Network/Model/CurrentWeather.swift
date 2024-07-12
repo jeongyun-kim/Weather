@@ -10,9 +10,17 @@ import Foundation
 struct CurrentWeather: Decodable {
     let coord: Location
     let weather: [Weather]
-    let main: Temperature
+    let temp: Temperature
     let wind : Wind
     let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case coord
+        case weather
+        case temp = "main"
+        case wind
+        case name
+    }
 }
 
 struct Location: Decodable {
@@ -71,7 +79,7 @@ struct Temperature: Decodable {
     }
     
     var regularHoursTempString: String {
-        let result = floor(convertedTemp)
+        let result = Int(convertedTemp)
         return "\(result)°"
     }
 }
