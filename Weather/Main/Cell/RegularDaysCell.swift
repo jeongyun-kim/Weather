@@ -53,18 +53,8 @@ final class RegularDaysCell: BaseTableViewCell {
     }
     
     func configureCell(_ data: RegularDaysWeather) {
-        if data.date != "오늘" {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
-            guard let newDate = dateFormatter.date(from: data.date) else { return }
-            dateFormatter.dateFormat = "EEEEE"
-            dateFormatter.locale = Locale(identifier: "ko_KR")
-            let result = dateFormatter.string(from: newDate)
-            dayLabel.text = result
-        } else {
-            dayLabel.text = data.date
-        }
-        
+        let dateString = DateFormatterManager.shared.dateToString(data.date, type: .days)
+        dayLabel.text = dateString
         guard let iconURL = data.iconURL else { return }
         iconImageView.kf.setImage(with: iconURL)
         minTempLabel.text = "최저 \(data.tempMin)"

@@ -26,12 +26,7 @@ struct ListData: Decodable {
     }
     
     var formattedDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        guard let newDate = dateFormatter.date(from: date) else { return "" }
-        dateFormatter.dateFormat = "HH시"
-        let result = dateFormatter.string(from: newDate)
+        let result = DateFormatterManager.shared.dateToString(date)
         return result
     }
 }

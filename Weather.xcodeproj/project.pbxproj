@@ -36,6 +36,7 @@
 		E0F85AED2C4120C00075E7A9 /* RegularDaysWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AEC2C4120C00075E7A9 /* RegularDaysWeather.swift */; };
 		E0F85AF02C4124B70075E7A9 /* RegularDaysTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */; };
 		E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */; };
+		E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		E0F85AEC2C4120C00075E7A9 /* RegularDaysWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysWeather.swift; sourceTree = "<group>"; };
 		E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysTableViewCell.swift; sourceTree = "<group>"; };
 		E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysCell.swift; sourceTree = "<group>"; };
+		E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,11 +141,11 @@
 		E0F85AB12C4016710075E7A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0F85AF52C414F800075E7A9 /* Manager */,
 				E0F85AD72C40BE2A0075E7A9 /* Protocol */,
 				E0F85AAA2C4013E40075E7A9 /* Base */,
 				E0F85AB32C4016820075E7A9 /* Resource.swift */,
 				E0F85AB92C4018C30075E7A9 /* APIKey.swift */,
-				E0F85AE82C41111E0075E7A9 /* UserDefaultsManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -203,6 +205,15 @@
 				E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */,
 			);
 			path = MainTableViewCell;
+			sourceTree = "<group>";
+		};
+		E0F85AF52C414F800075E7A9 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85AE82C41111E0075E7A9 /* UserDefaultsManager.swift */,
+				E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,6 +307,7 @@
 				E0F85ABA2C4018C30075E7A9 /* APIKey.swift in Sources */,
 				E0F85ACF2C40286A0075E7A9 /* MainViewModel.swift in Sources */,
 				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
+				E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */,
 				E0F85AD32C4031740075E7A9 /* RegularWeather.swift in Sources */,
 				E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */,
 				E0F85AB42C4016820075E7A9 /* Resource.swift in Sources */,

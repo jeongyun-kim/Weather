@@ -51,4 +51,9 @@ enum Resource {
             }
         }
     }
+    
+    enum DateCase {
+        case time
+        case days
+    }
 }
