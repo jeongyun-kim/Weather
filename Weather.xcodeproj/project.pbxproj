@@ -27,6 +27,10 @@
 		E0F85AD32C4031740075E7A9 /* RegularWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AD22C4031740075E7A9 /* RegularWeather.swift */; };
 		E0F85AD62C40BDC50075E7A9 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AD52C40BDC50075E7A9 /* NetworkService.swift */; };
 		E0F85AD92C40BE300075E7A9 /* NetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AD82C40BE300075E7A9 /* NetworkProtocol.swift */; };
+		E0F85ADB2C40C0E60075E7A9 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85ADA2C40C0E60075E7A9 /* Identifier.swift */; };
+		E0F85ADD2C40C1940075E7A9 /* TableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */; };
+		E0F85AE22C40DD3E0075E7A9 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */; };
+		E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +54,10 @@
 		E0F85AD22C4031740075E7A9 /* RegularWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularWeather.swift; sourceTree = "<group>"; };
 		E0F85AD52C40BDC50075E7A9 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		E0F85AD82C40BE300075E7A9 /* NetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocol.swift; sourceTree = "<group>"; };
+		E0F85ADA2C40C0E60075E7A9 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHeader.swift; sourceTree = "<group>"; };
+		E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularHoursCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +109,9 @@
 		E0F85AA72C4012460075E7A9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				E0F85AE02C40DD1F0075E7A9 /* Cell */,
 				E0F85AA82C40124D0075E7A9 /* MainViewController.swift */,
+				E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -159,8 +169,18 @@
 			isa = PBXGroup;
 			children = (
 				E0F85AD82C40BE300075E7A9 /* NetworkProtocol.swift */,
+				E0F85ADA2C40C0E60075E7A9 /* Identifier.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E0F85AE02C40DD1F0075E7A9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85AE12C40DD3E0075E7A9 /* MainTableViewCell.swift */,
+				E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,12 +263,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0F85ACD2C4027CE0075E7A9 /* Observable.swift in Sources */,
+				E0F85ADD2C40C1940075E7A9 /* TableViewHeader.swift in Sources */,
 				E0F85AAE2C4014960075E7A9 /* BaseCollectionViewCell.swift in Sources */,
 				E0F85AD92C40BE300075E7A9 /* NetworkProtocol.swift in Sources */,
 				E0F85AC42C401C720075E7A9 /* URLRequestCase.swift in Sources */,
 				E0F85AA92C40124D0075E7A9 /* MainViewController.swift in Sources */,
 				E0F85ABA2C4018C30075E7A9 /* APIKey.swift in Sources */,
 				E0F85ACF2C40286A0075E7A9 /* MainViewModel.swift in Sources */,
+				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
 				E0F85AD32C4031740075E7A9 /* RegularWeather.swift in Sources */,
 				E0F85AB42C4016820075E7A9 /* Resource.swift in Sources */,
 				E0F85ABD2C401A5D0075E7A9 /* CurrentWeather.swift in Sources */,
@@ -256,6 +278,8 @@
 				E0F85AAC2C4013EC0075E7A9 /* BaseViewController.swift in Sources */,
 				E0F85A922C4011680075E7A9 /* AppDelegate.swift in Sources */,
 				E0F85AB02C4014FB0075E7A9 /* BaseTableViewCell.swift in Sources */,
+				E0F85ADB2C40C0E60075E7A9 /* Identifier.swift in Sources */,
+				E0F85AE22C40DD3E0075E7A9 /* MainTableViewCell.swift in Sources */,
 				E0F85A942C4011680075E7A9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
