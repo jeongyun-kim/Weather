@@ -22,7 +22,7 @@ enum Resource {
         static let regular22 = UIFont.systemFont(ofSize: 22)
         static let regular24 = UIFont.systemFont(ofSize: 24)
         static let regular28 = UIFont.systemFont(ofSize: 28)
-        static let regular72 = UIFont.systemFont(ofSize: 72)
+        static let regular64 = UIFont.systemFont(ofSize: 64)
     }
     
     enum MainTableCellCase: String, CaseIterable {

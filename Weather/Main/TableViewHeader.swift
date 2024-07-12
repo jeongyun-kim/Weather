@@ -12,12 +12,13 @@ final class TableViewHeader: UITableViewHeaderFooterView {
     private let cityLabel: UILabel = {
         let label = UILabel()
         label.font = Resource.FontCase.regular28
+        label.textAlignment = .center
         label.text = "Jeju City"
         return label
     }()
     private let tempLabel: UILabel = {
         let label = UILabel()
-        label.font = Resource.FontCase.regular72
+        label.font = Resource.FontCase.regular64
         label.text = "5.9°"
         return label
     }()
@@ -50,7 +51,7 @@ final class TableViewHeader: UITableViewHeaderFooterView {
     private func setupConstraints() {
         cityLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide)
-            make.leading.equalTo(tempLabel.snp.leading).offset(4)
+            make.centerX.equalTo(contentView.snp.centerX)
         }
         
         tempLabel.snp.makeConstraints { make in
@@ -67,6 +68,13 @@ final class TableViewHeader: UITableViewHeaderFooterView {
             make.top.equalTo(descLabel.snp.bottom)
             make.centerX.equalTo(descLabel.snp.centerX)
         }
+    }
+    
+    func configureHeader(_ data: CurrentWeather?) {
+        guard let data else { return }
+        cityLabel.text = data.name
+        tempLabel.text = data.main.currentTempString
+        convertedTempLabel.text = data.main.convertedMinMaxTemp
     }
     
     required init?(coder: NSCoder) {

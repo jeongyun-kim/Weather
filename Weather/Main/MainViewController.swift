@@ -11,11 +11,16 @@ import Alamofire
 
 final class MainViewController: BaseViewController {
     private let vm = MainViewModel()
-    
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        vm.viewWillLoadTrigger.value = ()
     }
     
     override func setupHierarchy() {
@@ -39,6 +44,12 @@ final class MainViewController: BaseViewController {
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: MainTableViewCell.identifier)
         tableView.sectionHeaderTopPadding = CGFloat(0)
      }
+    
+    private func bind() {
+        vm.headerWeather.bind { _ in
+            self.tableView.reloadData()
+        }
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -71,6 +82,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if Resource.MainTableCellCase.allCases[section] == .header {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewHeader.identifier) as! TableViewHeader
+            header.configureHeader(vm.headerWeather.value)
             return header
         } else {
             return nil
@@ -79,7 +91,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 220
+            return 200
         } else {
             return 20
         }

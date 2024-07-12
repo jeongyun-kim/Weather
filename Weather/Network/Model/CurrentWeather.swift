@@ -12,6 +12,7 @@ struct CurrentWeather: Decodable {
     let weather: [Weather]
     let main: Temperature
     let wind : Wind
+    let name: String
 }
 
 struct Location: Decodable {
@@ -21,6 +22,7 @@ struct Location: Decodable {
 
 struct Weather: Decodable {
     let id: Int
+    let description: String
     let icon: String
 }
 
@@ -49,6 +51,22 @@ struct Temperature: Decodable {
     
     var convertedMaxTemp: Double {
         return tempMax - 273.15
+    }
+    
+    var convertedMinMaxTemp: String {
+        let maxTempString = String(format: "%.1f", convertedMaxTemp)
+        let minTempString = String(format: "%.1f", convertedMinTemp)
+        return "최고:\(maxTempString)° | 최저:\(minTempString)°"
+    }
+    
+    var currentTempString: String {
+        let result = String(format: "%.1f", convertedTemp)
+        return "\(result)°"
+    }
+    
+    var regularHoursTemp: String {
+        let result = String(format: "%d", convertedTemp)
+        return "\(result)°"
     }
 }
 
