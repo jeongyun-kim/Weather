@@ -30,7 +30,7 @@ final class RegularDaysCell: BaseTableViewCell {
         
         iconImageView.snp.makeConstraints { make in
             make.centerY.equalTo(dayLabel.snp.centerY)
-            make.leading.equalTo(dayLabel.snp.trailing).offset(32)
+            make.trailing.equalTo(minTempLabel.snp.leading).offset(-16)
             make.size.equalTo(36)
         }
         

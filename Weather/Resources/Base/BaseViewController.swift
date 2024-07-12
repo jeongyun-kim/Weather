@@ -27,7 +27,7 @@ class BaseViewController: UIViewController {
     
     func setupUI() {
         view.backgroundColor = .systemBackground
-        
+        navigationItem.backButtonDisplayMode = .minimal
     }
     
     func setupTableView() {

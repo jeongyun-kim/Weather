@@ -12,6 +12,10 @@ import Alamofire
 final class MainViewController: BaseViewController {
     private let vm = MainViewModel()
     private let mainTableView = UITableView(frame: .zero, style: .insetGrouped)
+    private let border = CustomBorder()
+    private let buttonView = UIView()
+    private let mapButton = UIButton()
+    private let listButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,16 +29,53 @@ final class MainViewController: BaseViewController {
     
     override func setupHierarchy() {
         view.addSubview(mainTableView)
+        view.addSubview(border)
+        view.addSubview(buttonView)
+        buttonView.addSubview(mapButton)
+        buttonView.addSubview(listButton)
     }
     
     override func setupConstraints() {
         mainTableView.snp.makeConstraints { make in
-            make.edges.equalTo(view)
+            make.top.horizontalEdges.equalTo(view)
+            make.bottom.equalTo(border.snp.top)
+        }
+        
+        border.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        buttonView.snp.makeConstraints { make in
+            make.top.equalTo(border.snp.bottom)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(78)
+            make.bottom.equalTo(view)
+        }
+        
+        mapButton.snp.makeConstraints { make in
+            make.top.equalTo(buttonView.snp.top)
+            make.leading.equalTo(buttonView.snp.leading).offset(16)
+            make.size.equalTo(40)
+        }
+        
+        listButton.snp.makeConstraints { make in
+            make.top.equalTo(buttonView.snp.top)
+            make.trailing.equalTo(buttonView.snp.trailing).inset(16)
+            make.size.equalTo(40)
         }
     }
     
     override func setupUI() {
         super.setupUI()
+        buttonView.backgroundColor = .systemGray6
+        mapButton.setImage(UIImage(systemName: Resource.ImageCase.map.rawValue), for: .normal)
+        listButton.addTarget(self, action: #selector(listBtnTapped), for: .touchUpInside)
+        listButton.setImage(UIImage(systemName: Resource.ImageCase.list.rawValue), for: .normal)
+    }
+    
+    @objc private func listBtnTapped(_ sender: UIButton) {
+        let vc = CityListViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func setupTableView() {

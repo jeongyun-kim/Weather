@@ -37,6 +37,8 @@
 		E0F85AF02C4124B70075E7A9 /* RegularDaysTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */; };
 		E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */; };
 		E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */; };
+		E0F85AFB2C4152F10075E7A9 /* CustomBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AFA2C4152F10075E7A9 /* CustomBorder.swift */; };
+		E0F85AFE2C4159590075E7A9 /* CityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85AFD2C4159590075E7A9 /* CityListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysTableViewCell.swift; sourceTree = "<group>"; };
 		E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularDaysCell.swift; sourceTree = "<group>"; };
 		E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterManager.swift; sourceTree = "<group>"; };
+		E0F85AFA2C4152F10075E7A9 /* CustomBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBorder.swift; sourceTree = "<group>"; };
+		E0F85AFD2C4159590075E7A9 /* CityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,7 @@
 				E0F85ACB2C4027C80075E7A9 /* ViewModel */,
 				E0F85AB12C4016710075E7A9 /* Resources */,
 				E0F85AA72C4012460075E7A9 /* Main */,
+				E0F85AFC2C4159060075E7A9 /* CityList */,
 				E0F85A912C4011680075E7A9 /* AppDelegate.swift */,
 				E0F85A932C4011680075E7A9 /* SceneDelegate.swift */,
 				E0F85A9A2C4011690075E7A9 /* Assets.xcassets */,
@@ -141,6 +146,7 @@
 		E0F85AB12C4016710075E7A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E0F85AF92C4152E00075E7A9 /* Custom */,
 				E0F85AF52C414F800075E7A9 /* Manager */,
 				E0F85AD72C40BE2A0075E7A9 /* Protocol */,
 				E0F85AAA2C4013E40075E7A9 /* Base */,
@@ -214,6 +220,22 @@
 				E0F85AF62C414F8C0075E7A9 /* DateFormatterManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		E0F85AF92C4152E00075E7A9 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85AFA2C4152F10075E7A9 /* CustomBorder.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		E0F85AFC2C4159060075E7A9 /* CityList */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85AFD2C4159590075E7A9 /* CityListViewController.swift */,
+			);
+			path = CityList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +326,9 @@
 				E0F85AC42C401C720075E7A9 /* URLRequestCase.swift in Sources */,
 				E0F85AA92C40124D0075E7A9 /* MainViewController.swift in Sources */,
 				E0F85AE92C41111E0075E7A9 /* UserDefaultsManager.swift in Sources */,
+				E0F85AFB2C4152F10075E7A9 /* CustomBorder.swift in Sources */,
 				E0F85ABA2C4018C30075E7A9 /* APIKey.swift in Sources */,
+				E0F85AFE2C4159590075E7A9 /* CityListViewController.swift in Sources */,
 				E0F85ACF2C40286A0075E7A9 /* MainViewModel.swift in Sources */,
 				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
 				E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */,
