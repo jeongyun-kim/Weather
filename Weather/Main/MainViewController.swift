@@ -46,7 +46,7 @@ final class MainViewController: BaseViewController {
      }
     
     private func bind() {
-        vm.headerWeather.bind { _ in
+        vm.endedRequestTrigger.bind { _ in
             self.tableView.reloadData()
         }
     }
@@ -73,6 +73,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.collectionView.register(RegularHoursCell.self, forCellWithReuseIdentifier: RegularHoursCell.identifier)
             cell.collectionView.dataSource = self
             cell.collectionView.delegate = self
+            cell.collectionView.reloadData()
             return cell
         default:
             return UITableViewCell()
@@ -104,11 +105,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 40
+        return vm.regularHoursWeathers.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RegularHoursCell.identifier, for: indexPath) as! RegularHoursCell
+        cell.configureCell(vm.regularHoursWeathers.value[indexPath.row])
         return cell
     }
 }

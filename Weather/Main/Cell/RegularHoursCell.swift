@@ -7,20 +7,19 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class RegularHoursCell: BaseCollectionViewCell {
     private let hourLabel: UILabel = {
         let label = UILabel()
-        label.text = "12시"
         label.font = Resource.FontCase.regular14
         return label
     }()
     private let iconImageView = UIImageView()
     private let tempLabel: UILabel = {
         let label = UILabel()
-        label.text = "7°"
         label.textAlignment = .center
-        label.font = Resource.FontCase.bold17
+        label.font = Resource.FontCase.bold15
         return label
     }()
     
@@ -48,7 +47,10 @@ final class RegularHoursCell: BaseCollectionViewCell {
         }
     }
     
-    override func configureLayout() {
-        iconImageView.image = UIImage(systemName: "star")
+    func configureCell(_ data: ListData) {
+        hourLabel.text = data.formattedDate
+        tempLabel.text = data.main.regularHoursTempString
+        guard let url = data.weather.first?.iconURL else { return }
+        iconImageView.kf.setImage(with: url)
     }
 }

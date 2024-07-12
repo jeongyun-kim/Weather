@@ -13,25 +13,21 @@ final class TableViewHeader: UITableViewHeaderFooterView {
         let label = UILabel()
         label.font = Resource.FontCase.regular28
         label.textAlignment = .center
-        label.text = "Jeju City"
         return label
     }()
     private let tempLabel: UILabel = {
         let label = UILabel()
         label.font = Resource.FontCase.regular64
-        label.text = "5.9°"
         return label
     }()
     private let descLabel: UILabel = {
         let label = UILabel()
         label.font = Resource.FontCase.regular24
-        label.text = "Broken Clouds"
         return label
     }()
     private let convertedTempLabel: UILabel = {
         let label = UILabel()
         label.font = Resource.FontCase.regular22
-        label.text = "최고: 7.0° | 최저:-4.2°"
         return label
     }()
     
@@ -75,6 +71,8 @@ final class TableViewHeader: UITableViewHeaderFooterView {
         cityLabel.text = data.name
         tempLabel.text = data.main.currentTempString
         convertedTempLabel.text = data.main.convertedMinMaxTemp
+        guard let weather = data.weather.first else { return }
+        descLabel.text = weather.description
     }
     
     required init?(coder: NSCoder) {

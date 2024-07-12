@@ -24,6 +24,12 @@ struct Weather: Decodable {
     let id: Int
     let description: String
     let icon: String
+    
+    var iconURL: URL? {
+        let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
+        guard let url = URL(string: urlString) else { return nil }
+        return url
+    }
 }
 
 struct Temperature: Decodable {
@@ -64,8 +70,8 @@ struct Temperature: Decodable {
         return "\(result)°"
     }
     
-    var regularHoursTemp: String {
-        let result = String(format: "%d", convertedTemp)
+    var regularHoursTempString: String {
+        let result = floor(convertedTemp)
         return "\(result)°"
     }
 }
@@ -73,11 +79,3 @@ struct Temperature: Decodable {
 struct Wind: Decodable {
     let speed: Double
 }
-//
-//{"coord":{"lon":126.5219,"lat":33.5097},
-//    "weather":[{"id":803,"main":"Clouds","description":"broken clouds","icon":"04n"}],
-//    "base":"stations",
-//    "main":{"temp":296.11,"feels_like":296.92,"temp_min":296.11,"temp_max":296.11,"pressure":1004,"humidity":94,"sea_level":1004,"grnd_level":1001},
-//    "visibility":7000,
-//    "wind":{"speed":1.54,"deg":250},
-//    "rain":{"1h":0.1},"clouds":{"all":75},"dt":1720705628,"sys":{"type":1,"id":8087,"country":"KR","sunrise":1720643541,"sunset":1720694762},"timezone":32400,"id":1846266,"name":"Jeju City","cod":200}

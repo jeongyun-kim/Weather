@@ -8,21 +8,26 @@
 import Foundation
 
 final class MainViewModel {
+    private let ud = UserDefaultsManager.shared
     
     var viewWillLoadTrigger: Observable<Void?> = Observable(nil)
+    
     var headerWeather: Observable<CurrentWeather?> = Observable(nil)
-
+    var regularHoursWeathers: Observable<[ListData]> = Observable([])
+    var endedRequestTrigger: Observable<Void?> = Observable(nil)
+    
     init() {
         fetchWeather()
     }
     
     private func fetchWeather() {
         viewWillLoadTrigger.bind { _ in
+            let weatherId = self.ud.weatherId
             let group = DispatchGroup()
             
             group.enter()
             DispatchQueue.global().async(group: group) {
-                NetworkService.shared.fetchCurrentWeather(id: "1835847") { weather, errorMessage in
+                NetworkService.shared.fetchCurrentWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
                         print(errorMessage)
                     } else {
@@ -35,19 +40,20 @@ final class MainViewModel {
             
             group.enter()
             DispatchQueue.global().async(group: group) {
-                NetworkService.shared.fetchWeatherRegularly(id: "1835847") { weather, errorMessage in
+                NetworkService.shared.fetchWeatherRegularly(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
                         print(errorMessage)
                     } else {
                         guard let weather else { return }
-                        print(weather)
+                        let newList = Array(weather.list.prefix(24))
+                        self.regularHoursWeathers.value = newList
                     }
                     group.leave()
                 }
             }
             
             group.notify(queue: .main) {
-                print("end!")
+                self.endedRequestTrigger.value = ()
             }
         }
     }

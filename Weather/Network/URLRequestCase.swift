@@ -12,12 +12,7 @@ enum URLRequestCase {
     case regularWeather(id: String)
     
     var baseURL: String {
-        switch self {
-        case .nowWeather:
-            return "https://api.openweathermap.org/data/2.5/"
-        case .regularWeather:
-            return "https://api.openweathermap.org/data/2.5/"
-        }
+        return "https://api.openweathermap.org/data/2.5/"
     }
     
     var endPoint: URL? {
@@ -27,7 +22,6 @@ enum URLRequestCase {
             return url
         case .regularWeather:
             guard let url = URL(string: baseURL + "forecast") else { return nil }
-            print(url)
             return url
         }
     }
@@ -39,7 +33,7 @@ enum URLRequestCase {
     var params: Parameters {
         switch self {
         case .nowWeather(let id), .regularWeather(let id):
-            return ["id": id, "appid": APIKey.key]
+            return ["id": id, "appid": APIKey.key, "lang": "kr"]
         }
     }
 }

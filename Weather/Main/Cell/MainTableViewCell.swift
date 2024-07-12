@@ -27,14 +27,14 @@ final class MainTableViewCell: BaseTableViewCell {
     private func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 6
-        let inset: CGFloat = 16
+        let inset: CGFloat = 24
         
         let size = (UIScreen.main.bounds.width - 4*spacing - 2*inset) / 5
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         layout.itemSize = CGSize(width: size, height: size*2)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: 0)
         return layout
     }
 }
