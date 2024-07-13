@@ -15,24 +15,43 @@ final class CityListViewModel {
     var viewDidLoadTrigger: Observable<Void?> = Observable(nil)
     // 사용자가 현재 선택한 도시 정보
     var selectedCity: Observable<City?> = Observable(nil)
+    // 사용자가 서치바에 키워드 입력할 때마다 활성화
+    var searchedKeyword: Observable<String> = Observable("")
     
     // Output
-    // CityList.json 파싱해서 내보낼 값 
-    var outputParsingResult: Observable<([City]?, String?)> = Observable((nil, nil))
+    // CityList.json 파싱 후 항상 가지고 있을 원본 CityList
+    var originalCityList: [City] = []
+    // CityListVC로 내보낼 리스트
+    var outputCityList: Observable<[City]?> = Observable(nil)
     // 사용자가 도시 선택 시, 뒤로가기 신호받기
     var viewWillDisappearTrigger: Observable<Void?> = Observable(nil)
-    
+
     init() {
+        transform()
+    }
+    
+    private func transform() {
         viewDidLoadTrigger.bind { _ in
             self.parsingCityList()
         }
         
-        // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경 
         selectedCity.bind { city in
             guard let city else { return }
+            // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경
             self.ud.weatherId = "\(city.id)"
             // 뒤로가기 신호보내기
             self.viewWillDisappearTrigger.value = ()
+        }
+        
+        searchedKeyword.bind { keyword in
+            if !keyword.isEmpty { // 서치바가 비워있지 않다면 도시명에 해당 키워드가 포함된 결과 내보내기
+                let searchedList = self.originalCityList.filter { city in
+                    city.name.contains(keyword)
+                }
+                self.outputCityList.value = searchedList
+            } else { // 서치바가 비어있다면 원본데이터로 다시 결과 바꿔주기
+                self.outputCityList.value = self.originalCityList
+            }
         }
     }
     
@@ -53,9 +72,10 @@ final class CityListViewModel {
         if let data {
             do {
                 let cityList = try decoder.decode([City].self, from: data)
-                self.outputParsingResult.value = (cityList, nil)
+                self.outputCityList.value = cityList
+                self.originalCityList = cityList
             } catch {
-                self.outputParsingResult.value = (nil, "지역 정보들을 가져오는데 실패했어요")
+                print("지역 정보들을 가져오는데 실패했어요")
             }
         }
     }

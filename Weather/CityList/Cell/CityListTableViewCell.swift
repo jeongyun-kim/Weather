@@ -40,6 +40,8 @@ final class CityListTableViewCell: BaseTableViewCell {
         super.configureLayout()
         contentView.backgroundColor = .systemGray6
         hashtagImageView.image = UIImage(systemName: Resource.ImageCase.hashtag.rawValue)
+        cityNameLabel.font = Resource.FontCase.bold16
+        countryLabel.font = Resource.FontCase.regular15
     }
     
     func configureCell(_ data: City) {
