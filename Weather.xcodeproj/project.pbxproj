@@ -42,6 +42,7 @@
 		E0F85B002C4247B10075E7A9 /* CityList.json in Resources */ = {isa = PBXBuildFile; fileRef = E0F85AFF2C4247B10075E7A9 /* CityList.json */; };
 		E0F85B022C4247EE0075E7A9 /* CityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B012C4247EE0075E7A9 /* CityList.swift */; };
 		E0F85B042C42484C0075E7A9 /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B032C42484C0075E7A9 /* CityListViewModel.swift */; };
+		E0F85B072C4255460075E7A9 /* CityListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B062C4255460075E7A9 /* CityListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		E0F85AFF2C4247B10075E7A9 /* CityList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CityList.json; sourceTree = "<group>"; };
 		E0F85B012C4247EE0075E7A9 /* CityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityList.swift; sourceTree = "<group>"; };
 		E0F85B032C42484C0075E7A9 /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
+		E0F85B062C4255460075E7A9 /* CityListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,9 +244,18 @@
 		E0F85AFC2C4159060075E7A9 /* CityList */ = {
 			isa = PBXGroup;
 			children = (
+				E0F85B052C4255390075E7A9 /* Cell */,
 				E0F85AFD2C4159590075E7A9 /* CityListViewController.swift */,
 			);
 			path = CityList;
+			sourceTree = "<group>";
+		};
+		E0F85B052C4255390075E7A9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85B062C4255460075E7A9 /* CityListTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +350,7 @@
 				E0F85AFB2C4152F10075E7A9 /* CustomBorder.swift in Sources */,
 				E0F85ABA2C4018C30075E7A9 /* APIKey.swift in Sources */,
 				E0F85AFE2C4159590075E7A9 /* CityListViewController.swift in Sources */,
+				E0F85B072C4255460075E7A9 /* CityListTableViewCell.swift in Sources */,
 				E0F85ACF2C40286A0075E7A9 /* MainViewModel.swift in Sources */,
 				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
 				E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */,

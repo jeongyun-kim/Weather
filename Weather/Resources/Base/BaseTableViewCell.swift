@@ -25,7 +25,7 @@ class BaseTableViewCell: UITableViewCell {
     }
     
     func configureLayout() {
-        
+        selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

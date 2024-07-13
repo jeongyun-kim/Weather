@@ -13,6 +13,7 @@ enum Resource {
         case map = "map"
         case list = "list.bullet"
         case more = "ellipsis.circle"
+        case hashtag = "number"
     }
     
     enum FontCase {
