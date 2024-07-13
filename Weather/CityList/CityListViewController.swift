@@ -21,6 +21,11 @@ final class CityListViewController: BaseViewController {
         configureSearchController()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.largeTitleDisplayMode = .always
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sendCityData?(vm.selectedCity.value)

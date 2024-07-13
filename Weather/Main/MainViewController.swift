@@ -25,6 +25,7 @@ final class MainViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         vm.viewWillLoadTrigger.value = ()
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     override func setupHierarchy() {
