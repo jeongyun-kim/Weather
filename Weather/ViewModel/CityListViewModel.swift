@@ -8,17 +8,31 @@
 import Foundation
 
 final class CityListViewModel {
+    private let ud = UserDefaultsManager.shared
     
     // Input
     // CityListVC 진입 시 신호받기
     var viewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    // 사용자가 현재 선택한 도시 정보
+    var selectedCity: Observable<City?> = Observable(nil)
     
     // Output
     // CityList.json 파싱해서 내보낼 값 
     var outputParsingResult: Observable<([City]?, String?)> = Observable((nil, nil))
+    // 사용자가 도시 선택 시, 뒤로가기 신호받기
+    var viewWillDisappearTrigger: Observable<Void?> = Observable(nil)
+    
     init() {
         viewDidLoadTrigger.bind { _ in
             self.parsingCityList()
+        }
+        
+        // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경 
+        selectedCity.bind { city in
+            guard let city else { return }
+            self.ud.weatherId = "\(city.id)"
+            // 뒤로가기 신호보내기
+            self.viewWillDisappearTrigger.value = ()
         }
     }
     

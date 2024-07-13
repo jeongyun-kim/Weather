@@ -10,13 +10,18 @@ import SnapKit
 
 final class CityListViewController: BaseViewController {
     private let vm = CityListViewModel()
-    
+    var sendCityData: ((City?) -> Void)?
     private let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
         vm.viewDidLoadTrigger.value = ()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sendCityData?(vm.selectedCity.value)
     }
     
     override func setupHierarchy() {
@@ -45,12 +50,18 @@ final class CityListViewController: BaseViewController {
     }
     
     private func bind() {
+        // 뷰 진입 시 CityList.json 파싱 -> 결과에 따라 처리
         vm.outputParsingResult.bind { cityList, errorMessage in
             if let errorMessage {
                 print(errorMessage)
             } else {
                 self.tableView.reloadData()
             }
+        }
+        
+        // 도시 선택하면 뒤로가기
+        vm.viewWillDisappearTrigger.bind { _ in
+            self.navigationController?.popViewController(animated: true)
         }
     }
 }
@@ -67,5 +78,10 @@ extension CityListViewController: UITableViewDelegate, UITableViewDataSource {
         let data = cityList[indexPath.row]
         cell.configureCell(data)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cityList = vm.outputParsingResult.value.0 else { return }
+        vm.selectedCity.value = cityList[indexPath.row]
     }
 }

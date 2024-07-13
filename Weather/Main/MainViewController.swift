@@ -76,6 +76,9 @@ final class MainViewController: BaseViewController {
     @objc private func listBtnTapped(_ sender: UIButton) {
         let vc = CityListViewController()
         navigationController?.pushViewController(vc, animated: true)
+        vc.sendCityData = { city in
+            self.vm.getCityData.value = city // 지도 위치 잡을 때 사용할 데이터
+        }
     }
     
     override func setupTableView() {

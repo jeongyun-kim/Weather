@@ -13,6 +13,7 @@ final class MainViewModel {
     // Input
     // MainVC 진입 시마다 신호받기
     var viewWillLoadTrigger: Observable<Void?> = Observable(nil)
+    var getCityData: Observable<City?> = Observable(nil)
     
     // Output
     // Header 내 들어갈 날씨 데이터
@@ -23,13 +24,14 @@ final class MainViewModel {
     var weatherForFiveDays: Observable<[RegularDaysWeather]> = Observable([])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
-   
+
     init() {
         fetchWeather()
     }
     
     private func fetchWeather() {
         viewWillLoadTrigger.bind { _ in
+            // UserDefaults에 저장된 날씨 아이디를 기준으로 통신
             let weatherId = self.ud.weatherId
             let group = DispatchGroup()
             
