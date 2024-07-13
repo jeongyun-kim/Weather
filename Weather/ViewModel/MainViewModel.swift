@@ -22,13 +22,16 @@ final class MainViewModel {
     var regularHoursWeathers: Observable<[ListData]> = Observable([])
     // 5일간의 일기예보 데이터
     var weatherForFiveDays: Observable<[RegularDaysWeather]> = Observable([])
+    // 테이블뷰 맨마지막칸의 날씨 정보로 사용할 데이터
+    var weatherInfoArr: Observable<[[String]]> = Observable([["","",""], ["","",""], ["","",""], ["","",""]])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
-
+    
     init() {
         fetchWeather()
     }
     
+    // 날씨에 관한 네트워크 통신
     private func fetchWeather() {
         viewWillLoadTrigger.bind { _ in
             // UserDefaults에 저장된 날씨 아이디를 기준으로 통신
@@ -42,7 +45,9 @@ final class MainViewModel {
                         print(errorMessage)
                     } else {
                         guard let weather else { return }
+                        // 헤더에 사용할 정보보내기
                         self.headerWeather.value = weather
+                        self.makeWeatherInfoArr(weather)
                     }
                     group.leave()
                 }
@@ -82,6 +87,7 @@ final class MainViewModel {
         }
     }
     
+    // 5일간의 일기예보 구성
     private func getRegularDaysWeatherArr(_ list: [ListData]) {
         var dailyWeatherArr: [RegularDaysWeather] = []
         
@@ -112,6 +118,25 @@ final class MainViewModel {
         }
         
         self.weatherForFiveDays.value = dailyWeatherArr
+    }
+    
+    // 그 외 정보 구성
+    private func makeWeatherInfoArr(_ data: CurrentWeather) {
+        // 그 외 정보에 사용할 딕셔너리로 내보내기
+        let infos = Resource.InfoCellCase.allCases
+        let wind = "\(data.wind.speed)m/s"
+        let cloud = "\(data.clouds.all)%"
+        let pressure = "\(data.temp.pressure)hpa"
+        let humidity = "\(data.temp.humidity)%"
+        let infoArr = [wind, cloud, pressure, humidity]
+
+        for i in 0..<infos.count {
+            let title = infos[i].rawValue
+            let imageName = infos[i].imageName
+            let info = infoArr[i]
+            
+            self.weatherInfoArr.value[i] = [title, imageName, info]
+        }
     }
 }
 

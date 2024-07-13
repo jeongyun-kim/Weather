@@ -43,6 +43,8 @@
 		E0F85B022C4247EE0075E7A9 /* CityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B012C4247EE0075E7A9 /* CityList.swift */; };
 		E0F85B042C42484C0075E7A9 /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B032C42484C0075E7A9 /* CityListViewModel.swift */; };
 		E0F85B072C4255460075E7A9 /* CityListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B062C4255460075E7A9 /* CityListTableViewCell.swift */; };
+		E0F85B0A2C426CE10075E7A9 /* WeatherInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B092C426CE10075E7A9 /* WeatherInformationCell.swift */; };
+		E0F85B0C2C426E390075E7A9 /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85B0B2C426E390075E7A9 /* InformationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +83,8 @@
 		E0F85B012C4247EE0075E7A9 /* CityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityList.swift; sourceTree = "<group>"; };
 		E0F85B032C42484C0075E7A9 /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
 		E0F85B062C4255460075E7A9 /* CityListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListTableViewCell.swift; sourceTree = "<group>"; };
+		E0F85B092C426CE10075E7A9 /* WeatherInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInformationCell.swift; sourceTree = "<group>"; };
+		E0F85B0B2C426E390075E7A9 /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 				E0F85AE02C40DD1F0075E7A9 /* Cell */,
 				E0F85AA82C40124D0075E7A9 /* MainViewController.swift */,
 				E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */,
+				E0F85B092C426CE10075E7A9 /* WeatherInformationCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			children = (
 				E0F85AE12C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift */,
 				E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */,
+				E0F85B0B2C426E390075E7A9 /* InformationTableViewCell.swift */,
 			);
 			path = MainTableViewCell;
 			sourceTree = "<group>";
@@ -343,6 +349,7 @@
 				E0F85ACD2C4027CE0075E7A9 /* Observable.swift in Sources */,
 				E0F85ADD2C40C1940075E7A9 /* TableViewHeader.swift in Sources */,
 				E0F85AAE2C4014960075E7A9 /* BaseCollectionViewCell.swift in Sources */,
+				E0F85B0A2C426CE10075E7A9 /* WeatherInformationCell.swift in Sources */,
 				E0F85AD92C40BE300075E7A9 /* NetworkProtocol.swift in Sources */,
 				E0F85AC42C401C720075E7A9 /* URLRequestCase.swift in Sources */,
 				E0F85AA92C40124D0075E7A9 /* MainViewController.swift in Sources */,
@@ -362,6 +369,7 @@
 				E0F85AD62C40BDC50075E7A9 /* NetworkService.swift in Sources */,
 				E0F85AAC2C4013EC0075E7A9 /* BaseViewController.swift in Sources */,
 				E0F85B022C4247EE0075E7A9 /* CityList.swift in Sources */,
+				E0F85B0C2C426E390075E7A9 /* InformationTableViewCell.swift in Sources */,
 				E0F85AF02C4124B70075E7A9 /* RegularDaysTableViewCell.swift in Sources */,
 				E0F85AED2C4120C00075E7A9 /* RegularDaysWeather.swift in Sources */,
 				E0F85A922C4011680075E7A9 /* AppDelegate.swift in Sources */,

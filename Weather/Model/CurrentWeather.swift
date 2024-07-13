@@ -12,6 +12,7 @@ struct CurrentWeather: Decodable {
     let weather: [Weather]
     let temp: Temperature
     let wind : Wind
+    let clouds: Cloud
     let name: String
     
     enum CodingKeys: String, CodingKey {
@@ -19,6 +20,7 @@ struct CurrentWeather: Decodable {
         case weather
         case temp = "main"
         case wind
+        case clouds
         case name
     }
 }
@@ -86,4 +88,8 @@ struct Temperature: Decodable {
 
 struct Wind: Decodable {
     let speed: Double
+}
+
+struct Cloud: Decodable {
+    let all: Int
 }

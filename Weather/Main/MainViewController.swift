@@ -87,6 +87,7 @@ final class MainViewController: BaseViewController {
         mainTableView.register(TableViewHeader.self, forHeaderFooterViewReuseIdentifier: TableViewHeader.identifier)
         mainTableView.register(RegularHoursTableViewCell.self, forCellReuseIdentifier: RegularHoursTableViewCell.identifier)
         mainTableView.register(RegularDaysTableViewCell.self, forCellReuseIdentifier: RegularDaysTableViewCell.identifier)
+        mainTableView.register(InformationTableViewCell.self, forCellReuseIdentifier: InformationTableViewCell.identifier)
         mainTableView.sectionHeaderTopPadding = CGFloat(0)
      }
     
@@ -125,6 +126,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             case .hours: // 3시간 간격
                 let cell = tableView.dequeueReusableCell(withIdentifier: RegularHoursTableViewCell.identifier, for: indexPath) as! RegularHoursTableViewCell
                 cell.collectionView.register(RegularHoursCell.self, forCellWithReuseIdentifier: RegularHoursCell.identifier)
+                cell.collectionView.tag = 1
                 cell.collectionView.dataSource = self
                 cell.collectionView.delegate = self
                 cell.collectionView.reloadData()
@@ -136,6 +138,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.daysTableView.dataSource = self
                 cell.daysTableView.delegate = self
                 cell.daysTableView.reloadData()
+                return cell
+            
+            case .information: // 그 외 정보
+                let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
+                cell.collectionView.tag = 2
+                cell.collectionView.dataSource = self
+                cell.collectionView.delegate = self
+                cell.collectionView.register(WeatherInformationCell.self, forCellWithReuseIdentifier: WeatherInformationCell.identifier)
+                cell.collectionView.reloadData()
                 return cell
                 
             default:
@@ -165,7 +176,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == mainTableView, section == 0 { // mainTableView 내 HeaderView라면
             return 200
         } else if tableView == mainTableView { // mainTableView 내 다른 Cell이라면
-            return 20
+            return 30
         } else { // 5일간의 일기예보라면
             return 0
         }
@@ -176,8 +187,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if tableView == mainTableView {
             let cellCase = Resource.MainTableCellCase.allCases[indexPath.section]
             switch cellCase {
-            case .hours: return 130
-            case .days: return 250
+            case .hours: 
+                return 130
+            case .days:
+                return 250
+            case .information:
+                return 300
             default: return 100
             }
         } else {
@@ -191,13 +206,24 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     // 셀의 개수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return vm.regularHoursWeathers.value.count
+        if collectionView.tag == 1 {
+            return vm.regularHoursWeathers.value.count
+        } else {
+            return vm.weatherInfoArr.value.count
+        }
     }
     
     // 셀 구성
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RegularHoursCell.identifier, for: indexPath) as! RegularHoursCell
-        cell.configureCell(vm.regularHoursWeathers.value[indexPath.row])
-        return cell
+        if collectionView.tag == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RegularHoursCell.identifier, for: indexPath) as! RegularHoursCell
+            cell.configureCell(vm.regularHoursWeathers.value[indexPath.row])
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherInformationCell.identifier, for: indexPath) as! WeatherInformationCell
+            let weatherInfos = vm.weatherInfoArr.value
+            cell.configureCell(vm.weatherInfoArr.value[indexPath.row])
+            return cell
+        }
     }
 }

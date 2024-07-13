@@ -33,7 +33,7 @@ enum Resource {
         case hours = " 3시간 간격의 일기예보"
         case days = " 5일 간의 일기예보"
         case location = " 위치"
-        case none = " "
+        case information = "그 외"
         
         var rowCnt: Int {
             switch self {
@@ -41,21 +41,30 @@ enum Resource {
             default: return 1
             }
         }
-        
-        var imageName: String? {
-            switch self {
-            case .none, .header:
-                return nil
-            case .hours, .days:
-                return "calendar"
-            case .location:
-                return "thermometer.low"
-            }
-        }
     }
     
     enum DateCase {
         case time
         case days
+    }
+    
+    enum InfoCellCase: String, CaseIterable {
+        case wind = "풍속"
+        case cloud = "구름"
+        case pressure = "기압"
+        case humidity = "습도"
+        
+        var imageName: String {
+            switch self {
+            case .wind:
+                return "wind"
+            case .cloud:
+                return "cloud.fill"
+            case .pressure:
+                return "thermometer.low"
+            case .humidity:
+                return "humidity.fill"
+            }
+        }
     }
 }
