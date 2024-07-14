@@ -101,6 +101,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E06A06BF2C436A3700AF8198 /* SubCell */ = {
+			isa = PBXGroup;
+			children = (
+				E0F85B092C426CE10075E7A9 /* WeatherInformationCell.swift */,
+				E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */,
+				E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */,
+			);
+			path = SubCell;
+			sourceTree = "<group>";
+		};
 		E0F85A852C4011680075E7A9 = {
 			isa = PBXGroup;
 			children = (
@@ -142,7 +152,6 @@
 				E0F85AE02C40DD1F0075E7A9 /* Cell */,
 				E0F85AA82C40124D0075E7A9 /* MainViewController.swift */,
 				E0F85ADC2C40C1940075E7A9 /* TableViewHeader.swift */,
-				E0F85B092C426CE10075E7A9 /* WeatherInformationCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -213,8 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				E0F85AEE2C4124980075E7A9 /* MainTableViewCell */,
-				E0F85AE32C40DE980075E7A9 /* RegularHoursCell.swift */,
-				E0F85AF12C41258C0075E7A9 /* RegularDaysCell.swift */,
+				E06A06BF2C436A3700AF8198 /* SubCell */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
