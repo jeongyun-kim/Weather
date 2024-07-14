@@ -26,6 +26,8 @@ final class MainViewModel {
     var weatherInfoArr: Observable<[[String]]> = Observable([["","",""], ["","",""], ["","",""], ["","",""]])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
+    // 네트워크 도중 에러가 생긴다면 에러 메시지 담아줄 변수 
+    var errorMessage: Observable<String?> = Observable(nil)
     
     init() {
         fetchWeather()
@@ -42,7 +44,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchCurrentWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        print(errorMessage)
+                        self.errorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         // 헤더에 사용할 정보보내기
@@ -57,7 +59,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchHoursWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        print(errorMessage)
+                        self.errorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         let newList = Array(weather.list.prefix(24))
@@ -71,7 +73,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchDaysWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        print(errorMessage)
+                        self.errorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         let weatherList = weather.list
@@ -122,7 +124,7 @@ final class MainViewModel {
     
     // 그 외 정보 구성
     private func makeWeatherInfoArr(_ data: CurrentWeather) {
-        // 그 외 정보에 사용할 딕셔너리로 내보내기
+        // 그 외 정보에 사용할 배열로 내보내기
         let infos = Resource.InfoCellCase.allCases
         let wind = "\(data.wind.speed)m/s"
         let cloud = "\(data.clouds.all)%"

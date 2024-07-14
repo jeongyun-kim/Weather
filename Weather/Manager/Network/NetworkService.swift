@@ -23,7 +23,7 @@ final class NetworkService {
             case .success(let value):
                 completionHandler(value, nil)
             case .failure(let error):
-                completionHandler(nil, "에러욤")
+                completionHandler(nil, "날씨 정보를 불러올 수 없습니다🥲")
             }
         }
     }

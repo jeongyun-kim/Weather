@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import SnapKit
 import Alamofire
+import SnapKit
+import Toast
 
 final class MainViewController: BaseViewController {
     private let vm = MainViewModel()
@@ -94,7 +95,11 @@ final class MainViewController: BaseViewController {
     
     private func bind() {
         vm.endedRequestTrigger.bind { _ in
-            self.mainTableView.reloadData()
+            if let errorMessage = self.vm.errorMessage.value {
+                self.view.makeToast(errorMessage)
+            } else {
+                self.mainTableView.reloadData()
+            }
         }
     }
 }
