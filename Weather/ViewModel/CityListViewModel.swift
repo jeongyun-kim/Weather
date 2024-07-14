@@ -22,7 +22,7 @@ final class CityListViewModel {
     // CityList.json 파싱 후 항상 가지고 있을 원본 CityList
     var originalCityList: [City] = []
     // CityListVC로 내보낼 리스트
-    var outputCityList: Observable<[City]?> = Observable(nil)
+    var outputCityListResult: Observable<(String?, [City]?)> = Observable((nil, []))
     // 사용자가 도시 선택 시, 뒤로가기 신호받기
     var viewWillDisappearTrigger: Observable<Void?> = Observable(nil)
 
@@ -48,9 +48,9 @@ final class CityListViewModel {
                 let searchedList = self.originalCityList.filter { city in
                     city.name.contains(keyword)
                 }
-                self.outputCityList.value = searchedList
+                self.outputCityListResult.value = (nil, searchedList)
             } else { // 서치바가 비어있다면 원본데이터로 다시 결과 바꿔주기
-                self.outputCityList.value = self.originalCityList
+                self.outputCityListResult.value = (nil, self.originalCityList)
             }
         }
     }
@@ -72,10 +72,10 @@ final class CityListViewModel {
         if let data {
             do {
                 let cityList = try decoder.decode([City].self, from: data)
-                self.outputCityList.value = cityList
+                self.outputCityListResult.value = (nil, cityList)
                 self.originalCityList = cityList
             } catch {
-                print("지역 정보들을 가져오는데 실패했어요")
+                self.outputCityListResult.value = ("지역 정보들을 가져오는데 실패했어요", nil)
             }
         }
     }

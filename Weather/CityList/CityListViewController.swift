@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 final class CityListViewController: BaseViewController {
     private let vm = CityListViewModel()
@@ -68,8 +69,12 @@ final class CityListViewController: BaseViewController {
     
     private func bind() {
         // 뷰 진입 시 CityList.json 파싱 -> 결과에 따라 처리
-        vm.outputCityList.bind { _ in
-            self.tableView.reloadData()
+        vm.outputCityListResult.bind { errorMessage, cityList in
+            if let errorMessage {
+                self.view.makeToast(errorMessage)
+            } else {
+                self.tableView.reloadData()
+            }
         }
         
         // 도시 선택하면 뒤로가기
@@ -81,20 +86,20 @@ final class CityListViewController: BaseViewController {
 
 extension CityListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let cityList = vm.outputCityList.value else { return 0 }
+        guard let cityList = vm.outputCityListResult.value.1 else { return 0 }
         return cityList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CityListTableViewCell.identifier, for: indexPath) as? CityListTableViewCell else { return UITableViewCell() }
-        guard let cityList = vm.outputCityList.value else { return UITableViewCell() }
+        guard let cityList = vm.outputCityListResult.value.1 else { return UITableViewCell() }
         let data = cityList[indexPath.row]
         cell.configureCell(data)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cityList = vm.outputCityList.value else { return }
+        guard let cityList = vm.outputCityListResult.value.1 else { return }
         vm.selectedCity.value = cityList[indexPath.row]
     }
 }
