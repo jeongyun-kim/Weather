@@ -8,13 +8,14 @@
 import Foundation
 
 final class MainViewModel {
+    private let monitor = NetworkMonitoringManager.shared
     private let ud = UserDefaultsManager.shared
     
     // Input
     // MainVC 진입 시마다 신호받기
     var viewWillLoadTrigger: Observable<Void?> = Observable(nil)
     var getCityData: Observable<City?> = Observable(nil)
-    
+
     // Output
     // Header 내 들어갈 날씨 데이터
     var headerWeather: Observable<CurrentWeather?> = Observable(nil)
@@ -28,9 +29,21 @@ final class MainViewModel {
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
     // 네트워크 도중 에러가 생긴다면 에러 메시지 담아줄 변수 
     var errorMessage: Observable<String?> = Observable(nil)
+    var networkErrorMessage: Observable<String?> = Observable(nil)
     
     init() {
         fetchWeather()
+        // 5초에 한 번씩 네트워크 연결 확인하기
+        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
+    }
+    
+    @objc func networkMonitoring() {
+        print(self.monitor.isConnected)
+        if self.monitor.isConnected {
+            self.networkErrorMessage.value = nil
+        } else { // 현재 네트워크 연결이 없다면 에러 메시지 보내기 
+            self.networkErrorMessage.value = "네트워크를 확인해주세요"
+        }
     }
     
     // 날씨에 관한 네트워크 통신

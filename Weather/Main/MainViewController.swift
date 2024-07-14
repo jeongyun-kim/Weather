@@ -101,6 +101,12 @@ final class MainViewController: BaseViewController {
                 self.mainTableView.reloadData()
             }
         }
+        
+        vm.networkErrorMessage.bind(closure: { errorMessage in
+            if let errorMessage {
+                self.view.makeToast(errorMessage)
+            }
+        }, initRun: true)
     }
 }
 

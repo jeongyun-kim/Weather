@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E06A06C22C436B1C00AF8198 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E06A06C12C436B1C00AF8198 /* Toast */; };
+		E06A06C42C436EEC00AF8198 /* NetworkMonitoringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A06C32C436EEC00AF8198 /* NetworkMonitoringManager.swift */; };
 		E0F85A922C4011680075E7A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85A912C4011680075E7A9 /* AppDelegate.swift */; };
 		E0F85A942C4011680075E7A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85A932C4011680075E7A9 /* SceneDelegate.swift */; };
 		E0F85A9B2C4011690075E7A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0F85A9A2C4011690075E7A9 /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E06A06C32C436EEC00AF8198 /* NetworkMonitoringManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitoringManager.swift; sourceTree = "<group>"; };
 		E0F85A8E2C4011680075E7A9 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F85A912C4011680075E7A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0F85A932C4011680075E7A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			children = (
 				E0F85AD52C40BDC50075E7A9 /* NetworkService.swift */,
 				E0F85AC32C401C720075E7A9 /* URLRequestCase.swift */,
+				E06A06C32C436EEC00AF8198 /* NetworkMonitoringManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				E0F85ADD2C40C1940075E7A9 /* TableViewHeader.swift in Sources */,
 				E0F85AAE2C4014960075E7A9 /* BaseCollectionViewCell.swift in Sources */,
 				E0F85B0A2C426CE10075E7A9 /* WeatherInformationCell.swift in Sources */,
+				E06A06C42C436EEC00AF8198 /* NetworkMonitoringManager.swift in Sources */,
 				E0F85AD92C40BE300075E7A9 /* NetworkProtocol.swift in Sources */,
 				E0F85AC42C401C720075E7A9 /* URLRequestCase.swift in Sources */,
 				E0F85AA92C40124D0075E7A9 /* MainViewController.swift in Sources */,
