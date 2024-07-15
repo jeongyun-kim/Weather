@@ -44,7 +44,7 @@ final class WeatherInformationCell: BaseCollectionViewCell {
     
     override func configureLayout() {
         infoView.backgroundColor = .white
-        infoView.layer.cornerRadius = 10
+        infoView.layer.cornerRadius = Resource.CornerCase.defaultCorner.rawValue
         infoTypeLabel.font = Resource.FontCase.regular15
         infoContentLabel.font = Resource.FontCase.regular28
         infoImageView.image = UIImage(systemName: "star")

@@ -28,7 +28,7 @@ enum Resource {
         static let regular64 = UIFont.systemFont(ofSize: 64)
     }
     
-    enum MainTableCellCase: String, CaseIterable {
+    enum MainSectionCase: String, CaseIterable {
         case header = ""
         case hours = " 3시간 간격의 일기예보"
         case days = " 5일 간의 일기예보"
@@ -66,5 +66,9 @@ enum Resource {
                 return "humidity.fill"
             }
         }
+    }
+    
+    enum CornerCase: CGFloat {
+        case defaultCorner = 10
     }
 }
