@@ -37,8 +37,6 @@ final class CityListViewModel {
         
         selectedCity.bind { city in
             guard let city else { return }
-            // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경
-            self.ud.weatherId = "\(city.id)"
             // 뒤로가기 신호보내기
             self.viewWillDisappearTrigger.value = ()
         }
