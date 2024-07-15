@@ -32,7 +32,7 @@ final class RegularHoursCell: BaseCollectionViewCell {
     override func setupConstraints() {
         hourLabel.snp.makeConstraints { make in
             make.height.equalTo(20)
-            make.top.equalTo(contentView.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(16)
         }
         
         iconImageView.snp.makeConstraints { make in
