@@ -22,6 +22,7 @@ final class RegularHoursTableViewCell: BaseTableViewCell {
     }
     
     override func configureLayout() {
+        super.configureLayout()
     }
     
     private func layout() -> UICollectionViewLayout {

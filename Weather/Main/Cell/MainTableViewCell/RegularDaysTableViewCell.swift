@@ -22,6 +22,7 @@ final class RegularDaysTableViewCell: BaseTableViewCell {
     }
     
     override func configureLayout() {
+        super.configureLayout()
         daysTableView.sectionHeaderTopPadding = 0
         daysTableView.tag = 1
     }

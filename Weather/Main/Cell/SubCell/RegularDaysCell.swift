@@ -46,6 +46,7 @@ final class RegularDaysCell: BaseTableViewCell {
     }
     
     override func configureLayout() {
+        super.configureLayout()
         [dayLabel, minTempLabel, maxTempLabel].forEach { label in
             label.font = Resource.FontCase.regular18
         }
