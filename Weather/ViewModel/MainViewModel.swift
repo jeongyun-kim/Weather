@@ -27,8 +27,9 @@ final class MainViewModel {
     var weatherInfoArr: Observable<[[String]]> = Observable([["","",""], ["","",""], ["","",""], ["","",""]])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
-    // 네트워크 도중 에러가 생긴다면 에러 메시지 담아줄 변수 
-    var errorMessage: Observable<String?> = Observable(nil)
+    // 날씨 정보 받아올 때 에러가 생긴다면 에러 메시지 담아주기 
+    var weatherErrorMessage: Observable<String?> = Observable(nil)
+    // 네트워크 상태 확인해서 네트워크 연결이 끊긴다면 에러 메시지 담아주기
     var networkErrorMessage: Observable<String?> = Observable(nil)
     
     init() {
@@ -49,6 +50,8 @@ final class MainViewModel {
     // 날씨에 관한 네트워크 통신
     private func fetchWeather() {
         viewWillLoadTrigger.bind { _ in
+            // 네트워크 통신 이전에 에러메시지 비워주기
+            self.weatherErrorMessage.value = nil
             // UserDefaults에 저장된 날씨 아이디를 기준으로 통신
             let weatherId = self.ud.weatherId
             let group = DispatchGroup()
@@ -57,7 +60,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchCurrentWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        self.errorMessage.value = errorMessage
+                        self.weatherErrorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         // 헤더에 사용할 정보보내기
@@ -72,7 +75,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchHoursWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        self.errorMessage.value = errorMessage
+                        self.weatherErrorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         let newList = Array(weather.list.prefix(24))
@@ -86,7 +89,7 @@ final class MainViewModel {
             DispatchQueue.global().async(group: group) {
                 NetworkService.shared.fetchDaysWeather(id: weatherId) { weather, errorMessage in
                     if let errorMessage {
-                        self.errorMessage.value = errorMessage
+                        self.weatherErrorMessage.value = errorMessage
                     } else {
                         guard let weather else { return }
                         let weatherList = weather.list

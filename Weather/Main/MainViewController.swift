@@ -21,6 +21,7 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        configureRefreshControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,9 +94,23 @@ final class MainViewController: BaseViewController {
         mainTableView.sectionHeaderTopPadding = CGFloat(0)
      }
     
+    // 새로고침
+    private func configureRefreshControl() {
+        mainTableView.refreshControl = UIRefreshControl()
+        mainTableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+    
+    @objc private func refresh() {
+        // 0.5초 뒤에 뷰 다시 불러오게 -> refreshEnd
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            self.vm.viewWillLoadTrigger.value = ()
+            self.mainTableView.refreshControl?.endRefreshing()
+        }
+    }
+    
     private func bind() {
         vm.endedRequestTrigger.bind { _ in
-            if let errorMessage = self.vm.errorMessage.value {
+            if let errorMessage = self.vm.weatherErrorMessage.value {
                 self.view.makeToast(errorMessage)
             } else {
                 self.mainTableView.reloadData()
@@ -155,9 +170,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             case .information: // 그 외 정보
                 let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
                 cell.collectionView.tag = 2
+                cell.collectionView.register(WeatherInformationCell.self, forCellWithReuseIdentifier: WeatherInformationCell.identifier)
                 cell.collectionView.dataSource = self
                 cell.collectionView.delegate = self
-                cell.collectionView.register(WeatherInformationCell.self, forCellWithReuseIdentifier: WeatherInformationCell.identifier)
                 cell.collectionView.reloadData()
                 return cell
                 
