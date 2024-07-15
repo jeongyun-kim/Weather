@@ -10,15 +10,15 @@ import SnapKit
 
 final class WeatherInformationCell: BaseCollectionViewCell {
     private let infoView = UIView()
-    private let categoryImageView = UIImageView()
-    private let categoryLabel = UILabel()
-    private let contentLabel = UILabel()
+    private let infoImageView = UIImageView()
+    private let infoTypeLabel = UILabel()
+    private let infoContentLabel = UILabel()
     
     override func setupHierarchy() {
         contentView.addSubview(infoView)
-        infoView.addSubview(categoryImageView)
-        infoView.addSubview(categoryLabel)
-        infoView.addSubview(contentLabel)
+        infoView.addSubview(infoImageView)
+        infoView.addSubview(infoTypeLabel)
+        infoView.addSubview(infoContentLabel)
     }
     
     override func setupConstraints() {
@@ -26,36 +26,37 @@ final class WeatherInformationCell: BaseCollectionViewCell {
             make.edges.equalTo(contentView.safeAreaInsets).inset(4)
         }
         
-        categoryImageView.snp.makeConstraints { make in
+        infoImageView.snp.makeConstraints { make in
             make.top.leading.equalTo(infoView).offset(16)
            
         }
         
-        categoryLabel.snp.makeConstraints { make in
-            make.leading.equalTo(categoryImageView.snp.trailing).offset(4)
-            make.centerY.equalTo(categoryImageView.snp.centerY)
+        infoTypeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(infoImageView.snp.trailing).offset(4)
+            make.centerY.equalTo(infoImageView.snp.centerY)
         }
         
-        contentLabel.snp.makeConstraints { make in
-            make.leading.equalTo(categoryImageView.snp.leading)
-            make.top.equalTo(categoryLabel.snp.bottom).offset(6)
+        infoContentLabel.snp.makeConstraints { make in
+            make.leading.equalTo(infoImageView.snp.leading)
+            make.top.equalTo(infoTypeLabel.snp.bottom).offset(6)
         }
     }
     
     override func configureLayout() {
         infoView.backgroundColor = .white
         infoView.layer.cornerRadius = 10
-        categoryLabel.font = Resource.FontCase.regular15
-        contentLabel.font = Resource.FontCase.regular28
-        categoryImageView.image = UIImage(systemName: "star")
+        infoTypeLabel.font = Resource.FontCase.regular15
+        infoContentLabel.font = Resource.FontCase.regular28
+        infoImageView.image = UIImage(systemName: "star")
     }
  
-    func configureCell(_ data: [String]) {
+    func configureCell(_ data: [String: String]) {
+        guard let infoType = data["infoType"], let infoImage = data["infoImage"],let info = data["info"] else { return }
         // 정보명
-        categoryLabel.text = data[0]
+        infoTypeLabel.text = infoType
         // 각 정보에 맞는 이미지
-        categoryImageView.image = UIImage(systemName: data[1])
+        infoImageView.image = UIImage(systemName: infoImage)
         // 각 정보
-        contentLabel.text = data[2]
+        infoContentLabel.text = info
     }
 }

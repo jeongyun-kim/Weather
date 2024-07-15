@@ -24,7 +24,7 @@ final class MainViewModel {
     // 5일간의 일기예보 데이터
     var weatherForFiveDays: Observable<[RegularDaysWeather]> = Observable([])
     // 테이블뷰 맨마지막칸의 날씨 정보로 사용할 데이터
-    var weatherInfoArr: Observable<[[String]]> = Observable([["","",""], ["","",""], ["","",""], ["","",""]])
+    var weatherInfoArr: Observable<[[String: String]]> = Observable([[:], [:], [:], [:]])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
     // 날씨 정보 받아올 때 에러가 생긴다면 에러 메시지 담아주기 
@@ -149,11 +149,11 @@ final class MainViewModel {
         let infoArr = [wind, cloud, pressure, humidity]
 
         for i in 0..<infos.count {
-            let title = infos[i].rawValue
-            let imageName = infos[i].imageName
+            let infoType = infos[i].rawValue
+            let infoImage = infos[i].imageName
             let info = infoArr[i]
             
-            self.weatherInfoArr.value[i] = [title, imageName, info]
+            self.weatherInfoArr.value[i] = ["infoType": infoType, "infoImage": infoImage, "info": info]
         }
     }
 }
