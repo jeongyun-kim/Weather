@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E03318002C453AD7000CC388 /* MapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E03317FF2C453AD7000CC388 /* MapTableViewCell.swift */; };
 		E06A06C22C436B1C00AF8198 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E06A06C12C436B1C00AF8198 /* Toast */; };
 		E06A06C42C436EEC00AF8198 /* NetworkMonitoringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06A06C32C436EEC00AF8198 /* NetworkMonitoringManager.swift */; };
 		E0F85A922C4011680075E7A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F85A912C4011680075E7A9 /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E03317FF2C453AD7000CC388 /* MapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
 		E06A06C32C436EEC00AF8198 /* NetworkMonitoringManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitoringManager.swift; sourceTree = "<group>"; };
 		E0F85A8E2C4011680075E7A9 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F85A912C4011680075E7A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				E0F85AE12C40DD3E0075E7A9 /* RegularHoursTableViewCell.swift */,
 				E0F85AEF2C4124B70075E7A9 /* RegularDaysTableViewCell.swift */,
+				E03317FF2C453AD7000CC388 /* MapTableViewCell.swift */,
 				E0F85B0B2C426E390075E7A9 /* InformationTableViewCell.swift */,
 			);
 			path = MainTableViewCell;
@@ -378,6 +381,7 @@
 				E0F85AE42C40DE980075E7A9 /* RegularHoursCell.swift in Sources */,
 				E0F85AF72C414F8C0075E7A9 /* DateFormatterManager.swift in Sources */,
 				E0F85AD32C4031740075E7A9 /* RegularWeather.swift in Sources */,
+				E03318002C453AD7000CC388 /* MapTableViewCell.swift in Sources */,
 				E0F85AF22C41258C0075E7A9 /* RegularDaysCell.swift in Sources */,
 				E0F85B042C42484C0075E7A9 /* CityListViewModel.swift in Sources */,
 				E0F85AB42C4016820075E7A9 /* Resource.swift in Sources */,

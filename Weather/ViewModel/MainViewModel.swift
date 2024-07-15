@@ -14,7 +14,7 @@ final class MainViewModel {
     // Input
     // MainVC 진입 시마다 신호받기
     var viewWillLoadTrigger: Observable<Void?> = Observable(nil)
-    var getCityData: Observable<City?> = Observable(nil)
+    var inputCityData: Observable<City?> = Observable(nil)
 
     // Output
     // Header 내 들어갈 날씨 데이터
@@ -23,6 +23,8 @@ final class MainViewModel {
     var regularHoursWeathers: Observable<[ListData]> = Observable([])
     // 5일간의 일기예보 데이터
     var weatherForFiveDays: Observable<[RegularDaysWeather]> = Observable([])
+    // 위치 정보 데이터
+    var outputLocation: Observable<Location?> = Observable(nil)
     // 테이블뷰 맨마지막칸의 날씨 정보로 사용할 데이터
     var weatherInfoArr: Observable<[[String: String]]> = Observable([[:], [:], [:], [:]])
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
@@ -34,6 +36,7 @@ final class MainViewModel {
     
     init() {
         fetchWeather()
+        saveCityData()
         // 5초에 한 번씩 네트워크 연결 확인하기
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
     }
@@ -47,8 +50,17 @@ final class MainViewModel {
         }
     }
     
+    private func saveCityData() {
+        inputCityData.bind { city in
+            guard let city else { return }
+            // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경
+            self.ud.weatherId = "\(city.id)"
+        }
+    }
+    
     // 날씨에 관한 네트워크 통신
     private func fetchWeather() {
+        print(#function)
         viewWillLoadTrigger.bind { _ in
             // 네트워크 통신 이전에 에러메시지 비워주기
             self.weatherErrorMessage.value = nil
@@ -66,6 +78,7 @@ final class MainViewModel {
                         // 헤더에 사용할 정보보내기
                         self.headerWeather.value = weather
                         self.makeWeatherInfoArr(weather)
+                        self.outputLocation.value = weather.coord
                     }
                     group.leave()
                 }

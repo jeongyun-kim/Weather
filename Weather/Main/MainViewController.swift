@@ -80,7 +80,8 @@ final class MainViewController: BaseViewController {
         let vc = CityListViewController()
         navigationController?.pushViewController(vc, animated: true)
         vc.sendCityData = { city in
-            self.vm.getCityData.value = city // 지도 위치 잡을 때 사용할 데이터
+            // CityList로부터 받아온 도시 데이터 
+            self.vm.inputCityData.value = city
         }
     }
     
@@ -90,6 +91,7 @@ final class MainViewController: BaseViewController {
         mainTableView.register(TableViewHeader.self, forHeaderFooterViewReuseIdentifier: TableViewHeader.identifier)
         mainTableView.register(RegularHoursTableViewCell.self, forCellReuseIdentifier: RegularHoursTableViewCell.identifier)
         mainTableView.register(RegularDaysTableViewCell.self, forCellReuseIdentifier: RegularDaysTableViewCell.identifier)
+        mainTableView.register(MapTableViewCell.self, forCellReuseIdentifier: MapTableViewCell.identifier)
         mainTableView.register(InformationTableViewCell.self, forCellReuseIdentifier: InformationTableViewCell.identifier)
         mainTableView.sectionHeaderTopPadding = CGFloat(0)
      }
@@ -125,31 +127,33 @@ final class MainViewController: BaseViewController {
     }
 }
 
+// MARK: TableViewExtension
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     // 테이블뷰 내 섹션의 개수
     func numberOfSections(in tableView: UITableView) -> Int {
-        let mainSectionCnt = Resource.MainTableCellCase.allCases.count
+        let mainSectionCnt = Resource.MainSectionCase.allCases.count
         return tableView == mainTableView ? mainSectionCnt : 1
     }
     
     // 테이블뷰 내 셀의 개수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let mainRowCnt = Resource.MainTableCellCase.allCases[section].rowCnt
+        let mainRowCnt = Resource.MainSectionCase.allCases[section].rowCnt
         let daysRowCnt = vm.weatherForFiveDays.value.count
         return tableView == mainTableView ? mainRowCnt : daysRowCnt
     }
     
     // mainTableView에서 보여질 섹션 제목 / daysTableView는 없음
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let mainSectionTitle = Resource.MainTableCellCase.allCases[section].rawValue
+        let mainSectionTitle = Resource.MainSectionCase.allCases[section].rawValue
         return tableView == mainTableView ? mainSectionTitle : nil
     }
     
     // 테이블뷰 셀 구성 (MainVC에서 사용하는 mainTableView / 5일간의 일기예보를 보여주는 daysTableView가 있음 )
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == mainTableView {
-            let cellCase = Resource.MainTableCellCase.allCases[indexPath.section]
-            switch cellCase {
+            let sectionCase = Resource.MainSectionCase.allCases[indexPath.section]
+            
+            switch sectionCase {
             case .hours: // 3시간 간격
                 let cell = tableView.dequeueReusableCell(withIdentifier: RegularHoursTableViewCell.identifier, for: indexPath) as! RegularHoursTableViewCell
                 cell.collectionView.register(RegularHoursCell.self, forCellWithReuseIdentifier: RegularHoursCell.identifier)
@@ -166,16 +170,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.daysTableView.delegate = self
                 cell.daysTableView.reloadData()
                 return cell
-            
+          
+            case .location:
+                guard let location = vm.outputLocation.value else { return UITableViewCell() }
+                let cell = tableView.dequeueReusableCell(withIdentifier: MapTableViewCell.identifier, for: indexPath) as! MapTableViewCell
+                cell.configureCell(location)
+                return cell
+                
             case .information: // 그 외 정보
                 let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.identifier, for: indexPath) as! InformationTableViewCell
-                cell.collectionView.tag = 2
                 cell.collectionView.register(WeatherInformationCell.self, forCellWithReuseIdentifier: WeatherInformationCell.identifier)
+                cell.collectionView.tag = 2
                 cell.collectionView.dataSource = self
                 cell.collectionView.delegate = self
                 cell.collectionView.reloadData()
                 return cell
-                
+            
             default:
                 return UITableViewCell()
             }
@@ -188,8 +198,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 헤더 구성
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cellCase = Resource.MainTableCellCase.allCases[section]
-        if tableView == mainTableView, cellCase == .header {
+        let sectionCase = Resource.MainSectionCase.allCases[section]
+        if tableView == mainTableView, sectionCase == .header {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableViewHeader.identifier) as! TableViewHeader
             header.configureHeader(vm.headerWeather.value)
             return header
@@ -212,15 +222,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     // 각 셀의 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == mainTableView {
-            let cellCase = Resource.MainTableCellCase.allCases[indexPath.section]
+            let cellCase = Resource.MainSectionCase.allCases[indexPath.section]
             switch cellCase {
-            case .hours: 
+            case .header:
+                return 0
+            case .hours:
                 return 130
             case .days:
                 return 250
+            case .location:
+                return 200
             case .information:
                 return 300
-            default: return 100
             }
         } else {
             return 50
@@ -228,7 +241,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: CollectionView+
+// MARK: CollectionViewExtension
 // 3시간 간격 일기예보
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     // 셀의 개수
@@ -248,7 +261,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeatherInformationCell.identifier, for: indexPath) as! WeatherInformationCell
-            let weatherInfos = vm.weatherInfoArr.value
             cell.configureCell(vm.weatherInfoArr.value[indexPath.row])
             return cell
         }
