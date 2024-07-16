@@ -71,4 +71,8 @@ enum Resource {
     enum CornerCase: CGFloat {
         case defaultCorner = 10
     }
+    
+    enum ErrorMessage: String {
+        case weatherError = "날씨 정보를 불러올 수 없습니다🥲"
+    }
 }

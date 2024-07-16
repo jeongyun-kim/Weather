@@ -12,33 +12,33 @@ final class NetworkService {
     private init() { }
     static let shared = NetworkService()
     
-    typealias CompletionHandler<T: Decodable> = (T?, String?) -> Void
+    //typealias CompletionHandler<T: Decodable> = (T?, String?) -> Void
     
-    func fetchWeatherData<T: Decodable>(urlCase: URLRequestCase, _ completionHandler: @escaping CompletionHandler<T>)  {
+    func fetchWeatherData<T: Decodable>(urlCase: URLRequestCase, _ completionHandler: @escaping (Result<T, Error>) -> Void)  {
         guard let url = urlCase.endPoint else { return }
         let parmas = urlCase.params
 
         AF.request(url, method: urlCase.method, parameters: parmas).responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let value):
-                completionHandler(value, nil)
+                completionHandler(.success(value))
             case .failure(let error):
-                completionHandler(nil, "날씨 정보를 불러올 수 없습니다🥲")
+                completionHandler(.failure(error))
             }
         }
     }
 }
 
 extension NetworkService: NetworkProtocol {
-    func fetchCurrentWeather(id: String, completionHandler: @escaping (CurrentWeather?, String?) -> Void) {
+    func fetchHoursWeather(id: String, completionHandler: @escaping (Result<RegularWeatherContainer, any Error>) -> Void) {
+        fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
+    }
+    
+    func fetchDaysWeather(id: String, completionHandler: @escaping (Result<RegularWeatherContainer, any Error>) -> Void) {
+        fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
+    }
+    
+    func fetchCurrentWeather(id: String, completionHandler: @escaping (Result<CurrentWeather, any Error>) -> Void) {
         fetchWeatherData(urlCase: .nowWeather(id: id), completionHandler)
-    }
-    
-    func fetchHoursWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void) {
-        fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
-    }
-    
-    func fetchDaysWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void) {
-        fetchWeatherData(urlCase: .regularWeather(id: id), completionHandler)
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkProtocol {
-    func fetchCurrentWeather(id: String, completionHandler: @escaping (CurrentWeather?, String?) -> Void)
-    func fetchHoursWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void)
-    func fetchDaysWeather(id: String, completionHandler: @escaping (RegularWeatherContainer?, String?) -> Void)
+    func fetchCurrentWeather(id: String, completionHandler: @escaping (Result<CurrentWeather, Error>) -> Void)
+    func fetchHoursWeather(id: String, completionHandler: @escaping (Result<RegularWeatherContainer, Error>) -> Void)
+    func fetchDaysWeather(id: String, completionHandler: @escaping (Result<RegularWeatherContainer, Error>) -> Void)
 }

@@ -41,8 +41,7 @@ final class MainViewModel {
         Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
     }
     
-    @objc func networkMonitoring() {
-        print(self.monitor.isConnected)
+    @objc private func networkMonitoring() {
         if self.monitor.isConnected {
             self.networkErrorMessage.value = nil
         } else { // 현재 네트워크 연결이 없다면 에러 메시지 보내기 
@@ -70,15 +69,15 @@ final class MainViewModel {
             
             group.enter()
             DispatchQueue.global().async(group: group) {
-                NetworkService.shared.fetchCurrentWeather(id: weatherId) { weather, errorMessage in
-                    if let errorMessage {
-                        self.weatherErrorMessage.value = errorMessage
-                    } else {
-                        guard let weather else { return }
+                NetworkService.shared.fetchCurrentWeather(id: weatherId) { response in
+                    switch response {
+                    case .success(let weather):
                         // 헤더에 사용할 정보보내기
                         self.headerWeather.value = weather
                         self.makeWeatherInfoArr(weather)
                         self.outputLocation.value = weather.coord
+                    case .failure(let failure):
+                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -86,13 +85,13 @@ final class MainViewModel {
             
             group.enter()
             DispatchQueue.global().async(group: group) {
-                NetworkService.shared.fetchHoursWeather(id: weatherId) { weather, errorMessage in
-                    if let errorMessage {
-                        self.weatherErrorMessage.value = errorMessage
-                    } else {
-                        guard let weather else { return }
+                NetworkService.shared.fetchHoursWeather(id: weatherId) { response in
+                    switch response {
+                    case .success(let weather):
                         let newList = Array(weather.list.prefix(24))
                         self.regularHoursWeathers.value = newList
+                    case .failure(let failure):
+                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -100,13 +99,14 @@ final class MainViewModel {
             
             group.enter()
             DispatchQueue.global().async(group: group) {
-                NetworkService.shared.fetchDaysWeather(id: weatherId) { weather, errorMessage in
-                    if let errorMessage {
-                        self.weatherErrorMessage.value = errorMessage
-                    } else {
-                        guard let weather else { return }
+                NetworkService.shared.fetchDaysWeather(id: weatherId) { response in
+                    switch response {
+                    case .success(let weather):
                         let weatherList = weather.list
+                        print(weatherList)
                         self.getRegularDaysWeatherArr(weatherList)
+                    case .failure(let failure):
+                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -126,6 +126,9 @@ final class MainViewModel {
             // 저장할 모델 생성
             var weather = RegularDaysWeather(date: "", iconURL: nil, tempMin: "", tempMax: "")
             // 5일간의 데이터 중에서 각 날짜별 최저/최고기온 구하기
+            // 정확히 오늘치 데이터는 5개
+            // 마지막 3개 데이터는 6일 이후의 시점에 포함
+            // 그 외 데이터는 8개씩 
             let minTemp = list[i...i+7].map { $0.temp.convertedMinTemp }.min()
             let maxTemp = list[i...i+7].map { $0.temp.convertedMaxTemp }.max()
             

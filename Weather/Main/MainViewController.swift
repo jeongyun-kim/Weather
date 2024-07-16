@@ -154,6 +154,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let sectionCase = Resource.MainSectionCase.allCases[indexPath.section]
             
             switch sectionCase {
+            case .header:
+                return UITableViewCell()
+                
             case .hours: // 3시간 간격
                 let cell = tableView.dequeueReusableCell(withIdentifier: RegularHoursTableViewCell.identifier, for: indexPath) as! RegularHoursTableViewCell
                 cell.collectionView.register(RegularHoursCell.self, forCellWithReuseIdentifier: RegularHoursCell.identifier)
@@ -185,9 +188,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.collectionView.delegate = self
                 cell.collectionView.reloadData()
                 return cell
-            
-            default:
-                return UITableViewCell()
             }
         } else { // 5일치 날씨 내 테이블뷰라면
             let cell = tableView.dequeueReusableCell(withIdentifier: RegularDaysCell.identifier, for: indexPath) as! RegularDaysCell
