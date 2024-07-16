@@ -15,6 +15,19 @@ final class CityListViewController: BaseViewController {
     private let tableView = UITableView()
     private let searchController = UISearchController()
     
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        print("CityVC init!")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("CityVC deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
@@ -69,17 +82,17 @@ final class CityListViewController: BaseViewController {
     
     private func bind() {
         // 뷰 진입 시 CityList.json 파싱 -> 결과에 따라 처리
-        vm.outputCityListResult.bind { errorMessage, cityList in
+        vm.outputCityListResult.bind { [weak self] errorMessage, cityList in
             if let errorMessage {
-                self.view.makeToast(errorMessage)
+                self?.view.makeToast(errorMessage)
             } else {
-                self.tableView.reloadData()
+                self?.tableView.reloadData()
             }
         }
         
         // 도시 선택하면 뒤로가기
-        vm.viewWillDisappearTrigger.bind { _ in
-            self.navigationController?.popViewController(animated: true)
+        vm.viewWillDisappearTrigger.bind { [weak self] _ in
+            self?.navigationController?.popViewController(animated: true)
         }
     }
 }

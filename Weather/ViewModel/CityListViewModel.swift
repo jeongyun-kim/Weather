@@ -27,28 +27,33 @@ final class CityListViewModel {
     var viewWillDisappearTrigger: Observable<Void?> = Observable(nil)
 
     init() {
+        print("CityVM init!")
         transform()
     }
     
+    deinit {
+        print("CityVM deinit!")
+    }
+    
     private func transform() {
-        viewDidLoadTrigger.bind { _ in
-            self.parsingCityList()
+        viewDidLoadTrigger.bind { [weak self] _ in
+            self?.parsingCityList()
         }
         
-        selectedCity.bind { city in
+        selectedCity.bind { [weak self] city in
             guard let city else { return }
             // 뒤로가기 신호보내기
-            self.viewWillDisappearTrigger.value = ()
+            self?.viewWillDisappearTrigger.value = ()
         }
         
-        searchedKeyword.bind { keyword in
+        searchedKeyword.bind { [weak self] keyword in
             if !keyword.isEmpty { // 서치바가 비워있지 않다면 도시명에 해당 키워드가 포함된 결과 내보내기
-                let searchedList = self.originalCityList.filter { city in
+                let searchedList = self?.originalCityList.filter { city in
                     city.name.contains(keyword)
                 }
-                self.outputCityListResult.value = (nil, searchedList)
+                self?.outputCityListResult.value = (nil, searchedList)
             } else { // 서치바가 비어있다면 원본데이터로 다시 결과 바꿔주기
-                self.outputCityListResult.value = (nil, self.originalCityList)
+                self?.outputCityListResult.value = (nil, self?.originalCityList)
             }
         }
     }

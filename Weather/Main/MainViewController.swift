@@ -111,17 +111,17 @@ final class MainViewController: BaseViewController {
     }
     
     private func bind() {
-        vm.endedRequestTrigger.bind { _ in
-            if let errorMessage = self.vm.weatherErrorMessage.value {
-                self.view.makeToast(errorMessage)
+        vm.endedRequestTrigger.bind { [weak self] _ in
+            if let errorMessage = self?.vm.weatherErrorMessage.value {
+                self?.view.makeToast(errorMessage)
             } else {
-                self.mainTableView.reloadData()
+                self?.mainTableView.reloadData()
             }
         }
         
-        vm.networkErrorMessage.bind(closure: { errorMessage in
+        vm.networkErrorMessage.bind(closure: { [weak self] errorMessage in
             if let errorMessage {
-                self.view.makeToast(errorMessage)
+                self?.view.makeToast(errorMessage)
             }
         }, initRun: true)
     }

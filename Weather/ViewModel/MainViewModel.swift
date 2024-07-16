@@ -50,21 +50,20 @@ final class MainViewModel {
     }
     
     private func saveCityData() {
-        inputCityData.bind { city in
+        inputCityData.bind { [weak self] city in
             guard let city else { return }
             // 도시가 새로 선택되면 UserDefaults에 저장되어있는 도시ID 변경
-            self.ud.weatherId = "\(city.id)"
+            self?.ud.weatherId = "\(city.id)"
         }
     }
     
     // 날씨에 관한 네트워크 통신
     private func fetchWeather() {
-        print(#function)
-        viewWillLoadTrigger.bind { _ in
+        viewWillLoadTrigger.bind { [weak self] _ in
             // 네트워크 통신 이전에 에러메시지 비워주기
-            self.weatherErrorMessage.value = nil
+            self?.weatherErrorMessage.value = nil
             // UserDefaults에 저장된 날씨 아이디를 기준으로 통신
-            let weatherId = self.ud.weatherId
+            guard let weatherId = self?.ud.weatherId else { return }
             let group = DispatchGroup()
             
             group.enter()
@@ -73,11 +72,11 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         // 헤더에 사용할 정보보내기
-                        self.headerWeather.value = weather
-                        self.makeWeatherInfoArr(weather)
-                        self.outputLocation.value = weather.coord
-                    case .failure(let failure):
-                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self?.headerWeather.value = weather
+                        self?.makeWeatherInfoArr(weather)
+                        self?.outputLocation.value = weather.coord
+                    case .failure(_):
+                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -89,9 +88,9 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         let newList = Array(weather.list.prefix(24))
-                        self.regularHoursWeathers.value = newList
-                    case .failure(let failure):
-                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self?.regularHoursWeathers.value = newList
+                    case .failure(_):
+                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -103,16 +102,16 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         let weatherList = weather.list
-                        self.getRegularDaysWeatherArr(weatherList)
-                    case .failure(let failure):
-                        self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self?.getRegularDaysWeatherArr(weatherList)
+                    case .failure(_):
+                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
             }
             
             group.notify(queue: .main) {
-                self.endedRequestTrigger.value = ()
+                self?.endedRequestTrigger.value = ()
             }
         }
     }
