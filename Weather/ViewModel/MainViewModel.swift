@@ -103,7 +103,6 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         let weatherList = weather.list
-                        print(weatherList)
                         self.getRegularDaysWeatherArr(weatherList)
                     case .failure(let failure):
                         self.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
@@ -119,39 +118,32 @@ final class MainViewModel {
     }
     
     // 5일간의 일기예보 구성
+    // 5일간의 데이터 중에서 각 날짜별 최저/최고기온 구하기
+    // 현재 네트워크를 통신하는 시점 -6시간 전 데이터부터 가르쳐줌
+    // 즉, 8개씩 잘라서 보여주면 오늘 날씨가 아니라 오늘내일 날씨가 섞여서 나올수도 있음을 의미
+    // => 현재 시점을 기준으로 그냥 각 날짜별 첫번째 데이터를 key로 한 딕셔너리 구성해서 values만 보내주기
     private func getRegularDaysWeatherArr(_ list: [ListData]) {
-        var dailyWeatherArr: [RegularDaysWeather] = []
+        var dailyWeatherDic: [String: RegularDaysWeather] = [:]
         
-        for i in stride(from: 0, to: list.count, by: 8) {
-            // 저장할 모델 생성
-            var weather = RegularDaysWeather(date: "", iconURL: nil, tempMin: "", tempMax: "")
-            // 5일간의 데이터 중에서 각 날짜별 최저/최고기온 구하기
-            // 정확히 오늘치 데이터는 5개
-            // 마지막 3개 데이터는 6일 이후의 시점에 포함
-            // 그 외 데이터는 8개씩 
-            let minTemp = list[i...i+7].map { $0.temp.convertedMinTemp }.min()
-            let maxTemp = list[i...i+7].map { $0.temp.convertedMaxTemp }.max()
-            
-            // 첫번째 데이터면 오늘
-            if i == 0 {
-                weather.date = "오늘"
-            } else { // 그 외는 내일모레...
-                weather.date = list[i].date // 각 날짜 저장
+        for i in 0..<list.count {
+            let data = list[i]
+            // yyyy-MM-dd HH:mm:ss에서 yyyy-MM-dd만 가져와서 각 날짜별로 하나씩만
+            let key = data.date.components(separatedBy: " ")[0]
+            if let weather = data.weather.first, !dailyWeatherDic.keys.contains(key) {
+                let minTemp = "\(Int(data.temp.convertedMinTemp))°"
+                let maxTemp = "\(Int(data.temp.convertedMaxTemp))°"
+                dailyWeatherDic[key] = RegularDaysWeather(date: data.date, iconURL: weather.iconURL, tempMin: minTemp, tempMax: maxTemp)
             }
-            
-            // 최저/최고기온 Int로 변경해 소수점 제거한 후 String으로 저장
-            if let minTemp, let maxTemp, let weatherData = list[i+2].weather.first {
-                let intMinTemp = Int(minTemp)
-                let intMaxTemp = Int(maxTemp)
-                weather.tempMin = "\(intMinTemp)°"
-                weather.tempMax = "\(intMaxTemp)°"
-                
-                weather.iconURL = weatherData.iconURL
-            }
-            dailyWeatherArr.append(weather)
         }
+
+        // 날짜순으로 정렬
+        // 간혹 오늘 포함 6일치가 오는 경우가 있음 -> 5일치만 받아오게 앞에서 5개로 잘라주기
+        let dicValues = dailyWeatherDic.values.sorted(by: { $0.date < $1.date }).prefix(5)
+        var dicValuesArr = Array(dicValues)
+        // 첫번째 데이터 = 오늘
+        dicValuesArr[0].date = "오늘"
         
-        self.weatherForFiveDays.value = dailyWeatherArr
+        self.weatherForFiveDays.value = dicValuesArr
     }
     
     // 그 외 정보 구성
