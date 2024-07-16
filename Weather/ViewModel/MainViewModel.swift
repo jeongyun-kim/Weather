@@ -35,10 +35,25 @@ final class MainViewModel {
     var networkErrorMessage: Observable<String?> = Observable(nil)
     
     init() {
+        print("MainVM init!")
         fetchWeather()
         saveCityData()
         // 5초에 한 번씩 네트워크 연결 확인하기
-        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
+        // 계속해서 실행되는 메서드 -> 메모리에 계속 남아있음 -> ListVC에서 MainVC를 불러왔다가 다시 뒤로오더라도 MainVM이 deinit 되지않음
+//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
+        // => 타이머 재구성 
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+            guard let isConnected = self?.monitor.isConnected else { return }
+            if isConnected {
+                self?.networkErrorMessage.value = nil
+            } else { // 현재 네트워크 연결이 없다면 에러 메시지 보내기
+                self?.networkErrorMessage.value = "네트워크를 확인해주세요"
+            }
+        }
+    }
+    
+    deinit {
+        print("MainVM deinit")
     }
     
     @objc private func networkMonitoring() {
