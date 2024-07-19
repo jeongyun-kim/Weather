@@ -30,38 +30,16 @@ final class MainViewModel {
     // 네트워크 통신이 끝났음을 알림 -> TableView Reload
     var endedRequestTrigger: Observable<Void?> = Observable(nil)
     // 날씨 정보 받아올 때 에러가 생긴다면 에러 메시지 담아주기 
-    var weatherErrorMessage: Observable<String?> = Observable(nil)
-    // 네트워크 상태 확인해서 네트워크 연결이 끊긴다면 에러 메시지 담아주기
-    var networkErrorMessage: Observable<String?> = Observable(nil)
+    var errorMessage: Observable<String?> = Observable(nil)
     
     init() {
         print("MainVM init!")
         fetchWeather()
         saveCityData()
-        // 5초에 한 번씩 네트워크 연결 확인하기
-        // 계속해서 실행되는 메서드 -> 메모리에 계속 남아있음 -> ListVC에서 MainVC를 불러왔다가 다시 뒤로오더라도 MainVM이 deinit 되지않음
-//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(networkMonitoring), userInfo: nil, repeats: true)
-        // => 타이머 재구성 
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
-            guard let isConnected = self?.monitor.isConnected else { return }
-            if isConnected {
-                self?.networkErrorMessage.value = nil
-            } else { // 현재 네트워크 연결이 없다면 에러 메시지 보내기
-                self?.networkErrorMessage.value = "네트워크를 확인해주세요"
-            }
-        }
     }
     
     deinit {
         print("MainVM deinit")
-    }
-    
-    @objc private func networkMonitoring() {
-        if self.monitor.isConnected {
-            self.networkErrorMessage.value = nil
-        } else { // 현재 네트워크 연결이 없다면 에러 메시지 보내기 
-            self.networkErrorMessage.value = "네트워크를 확인해주세요"
-        }
     }
     
     private func saveCityData() {
@@ -75,10 +53,16 @@ final class MainViewModel {
     // 날씨에 관한 네트워크 통신
     private func fetchWeather() {
         viewWillLoadTrigger.bind { [weak self] _ in
+            guard let self else { return }
             // 네트워크 통신 이전에 에러메시지 비워주기
-            self?.weatherErrorMessage.value = nil
+            self.errorMessage.value = nil
+            // 통신 이전에 네트워크가 연결되어 있지 않다면 에러메시지 던지고 바로 return 
+            if !monitoringNetwork() {
+                return 
+            }
+            
             // UserDefaults에 저장된 날씨 아이디를 기준으로 통신
-            guard let weatherId = self?.ud.weatherId else { return }
+            let weatherId = self.ud.weatherId
             let group = DispatchGroup()
             
             group.enter()
@@ -87,11 +71,11 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         // 헤더에 사용할 정보보내기
-                        self?.headerWeather.value = weather
-                        self?.makeWeatherInfoArr(weather)
-                        self?.outputLocation.value = weather.coord
+                        self.headerWeather.value = weather
+                        self.makeWeatherInfoArr(weather)
+                        self.outputLocation.value = weather.coord
                     case .failure(_):
-                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self.errorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -103,9 +87,9 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         let newList = Array(weather.list.prefix(24))
-                        self?.regularHoursWeathers.value = newList
+                        self.regularHoursWeathers.value = newList
                     case .failure(_):
-                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self.errorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
@@ -117,18 +101,27 @@ final class MainViewModel {
                     switch response {
                     case .success(let weather):
                         let weatherList = weather.list
-                        self?.getRegularDaysWeatherArr(weatherList)
+                        self.getRegularDaysWeatherArr(weatherList)
                     case .failure(_):
-                        self?.weatherErrorMessage.value = Resource.ErrorMessage.weatherError.rawValue
+                        self.errorMessage.value = Resource.ErrorMessage.weatherError.rawValue
                     }
                     group.leave()
                 }
             }
             
             group.notify(queue: .main) {
-                self?.endedRequestTrigger.value = ()
+                self.endedRequestTrigger.value = ()
             }
         }
+    }
+    
+    private func monitoringNetwork() -> Bool {
+        let isConnected = monitor.isConnected
+        if !isConnected {
+            self.errorMessage.value = Resource.ErrorMessage.networkError.rawValue
+            self.endedRequestTrigger.value = ()
+        }
+        return isConnected
     }
     
     // 5일간의 일기예보 구성

@@ -104,5 +104,6 @@ enum Resource {
     
     enum ErrorMessage: String {
         case weatherError = "날씨 정보를 불러올 수 없습니다🥲"
+        case networkError = "네트워크를 확인해주세요!"
     }
 }
