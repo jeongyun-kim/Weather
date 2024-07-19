@@ -179,5 +179,3 @@ final class MainViewModel {
         }
     }
 }
-
-

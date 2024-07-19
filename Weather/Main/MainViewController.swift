@@ -132,7 +132,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     // 테이블뷰 내 섹션의 개수
     func numberOfSections(in tableView: UITableView) -> Int {
         let mainSectionCnt = Resource.MainSectionCase.allCases.count
-        return tableView == mainTableView ? mainSectionCnt : 1
+        let subSectionCnt = Resource.SubSectionCase.sectionCnt.rawValue
+        return tableView == mainTableView ? mainSectionCnt : subSectionCnt
     }
     
     // 테이블뷰 내 셀의 개수
@@ -210,34 +211,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 각 셀 섹션 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView == mainTableView, section == 0 { // mainTableView 내 HeaderView라면
-            return 200
-        } else if tableView == mainTableView { // mainTableView 내 다른 Cell이라면
-            return 30
-        } else { // 5일간의 일기예보라면
-            return 0
-        }
+        let cellCase = Resource.MainSectionCase.allCases[section]
+        let subCellHeaderHeight = CGFloat(Resource.SubSectionCase.rowHeight.rawValue)
+        return tableView == mainTableView ? cellCase.headerHeight : subCellHeaderHeight  // 5일간의 일기예보라면
     }
     
     // 각 셀의 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == mainTableView {
-            let cellCase = Resource.MainSectionCase.allCases[indexPath.section]
-            switch cellCase {
-            case .header:
-                return 0
-            case .hours:
-                return 130
-            case .days:
-                return 250
-            case .location:
-                return 200
-            case .information:
-                return 300
-            }
-        } else {
-            return 50
-        }
+        let cellCase = Resource.MainSectionCase.allCases[indexPath.section]
+        let subCellHeight = CGFloat(Resource.SubSectionCase.rowHeight.rawValue)
+        return tableView == mainTableView ? cellCase.rowHeight : subCellHeight
     }
 }
 

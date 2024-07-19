@@ -41,6 +41,30 @@ enum Resource {
             default: return 1
             }
         }
+        
+        var headerHeight: CGFloat {
+            switch self {
+            case .header:
+                return 200
+            default:
+                return 30
+            }
+        }
+        
+        var rowHeight: CGFloat {
+            switch self {
+            case .header:
+                return 0
+            case .hours:
+                return 130
+            case .days:
+                return 250
+            case .location:
+                return 200
+            case .information:
+                return 300
+            }
+        }
     }
     
     enum DateCase {
@@ -66,6 +90,12 @@ enum Resource {
                 return "humidity.fill"
             }
         }
+    }
+    
+    enum SubSectionCase: Int {
+        case sectionCnt = 1
+        case rowHeight = 50
+        case headerHeight = 0
     }
     
     enum CornerCase: CGFloat {
