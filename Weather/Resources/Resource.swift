@@ -70,6 +70,15 @@ enum Resource {
     enum DateCase {
         case time
         case days
+        
+        var format: String {
+            switch self {
+            case .time:
+                return "HH시"
+            case .days:
+                return "EEEEE"
+            }
+        }
     }
     
     enum InfoCellCase: String, CaseIterable {

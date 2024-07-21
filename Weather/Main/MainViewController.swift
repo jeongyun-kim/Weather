@@ -203,11 +203,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // 각 셀 섹션 높이
+    // 각 섹션 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let cellCase = Resource.MainSectionCase.allCases[section]
-        let subCellHeaderHeight = CGFloat(Resource.SubSectionCase.rowHeight.rawValue)
-        return tableView == mainTableView ? cellCase.headerHeight : subCellHeaderHeight  // 5일간의 일기예보라면
+        let subCellHeaderHeight = CGFloat(Resource.SubSectionCase.headerHeight.rawValue)
+        return tableView == mainTableView ? cellCase.headerHeight : subCellHeaderHeight // 5일간의 일기예보라면
     }
     
     // 각 셀의 높이

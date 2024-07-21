@@ -18,14 +18,7 @@ final class DateFormatterManager {
         dateFormatter.locale = Locale(identifier: "ko_KR")
         // 5일간의 일기예보에서 첫 데이터 날짜는 '오늘'로 받아오고 있기 때문에 날짜 변환 불가 -> 그대로 오늘 반환
         guard let newDate = dateFormatter.date(from: data) else { return data }
-        
-        switch type {
-        case .time:
-            dateFormatter.dateFormat = "HH시"
-        case .days:
-            dateFormatter.dateFormat = "EEEEE"
-        }
-        
+        dateFormatter.dateFormat = type.format
         let result = dateFormatter.string(from: newDate)
         return result
     }
